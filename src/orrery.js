@@ -1,6 +1,6 @@
 // The orrery: the assistant at the centre, devices as tilted orbits, Actors as bodies.
-// SVG + requestAnimationFrame. Paused when off-screen or in a background tab,
-// lighter on small/touch screens, and a still picture when reduced motion is preferred.
+// SVG + requestAnimationFrame, running at the display's refresh rate.
+// Paused only while off-screen or in a background tab.
 
 const NS = "http://www.w3.org/2000/svg";
 const TILT = 0.34; // ellipse ry / rx
@@ -56,22 +56,21 @@ function rng(seed) {
 const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 
-export function mountOrrery(svg, { reduceMotion, finePointer }) {
+export function mountOrrery(svg) {
   if (!svg) return;
   const scene = svg.querySelector("#orrery-scene");
-  const lite = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
   const rot = `rotate(${(ROT * 180) / Math.PI})`;
 
   // far layer: stars (moves a little against the pointer for depth)
   const stars = el("g", { class: "o-stars" }, scene);
   const rand = rng(11);
-  const starCount = lite ? 36 : 72;
+  const starCount = 72;
   for (let i = 0; i < starCount; i++) {
     el(
       "circle",
       {
-        cx: (rand() * 1040 - 520).toFixed(1),
-        cy: (rand() * 800 - 400).toFixed(1),
+        cx: (rand() * 1160 - 580).toFixed(1),
+        cy: (rand() * 600 - 300).toFixed(1),
         r: (rand() * 1.1 + 0.35).toFixed(2),
         style: `--o:${(rand() * 0.5 + 0.2).toFixed(2)};--tw:${(3 + rand() * 5).toFixed(1)}s;--td:${(-rand() * 6).toFixed(1)}s`,
       },
@@ -141,20 +140,10 @@ export function mountOrrery(svg, { reduceMotion, finePointer }) {
 
   bodies.forEach(place);
 
-  if (reduceMotion.matches) {
-    // A still, composed moment.
-    [0, 4, 7].forEach((i, n) => {
-      const b = bodies[i];
-      el("line", { class: `o-thread o-thread--${n === 1 ? "return" : "out"}`, x1: 0, y1: 0, x2: b.x, y2: b.y, opacity: 0.45 }, threads);
-    });
-    svg.classList.add("is-still");
-    return;
-  }
-
   /* ---------- messages ---------- */
   const live = [];
   const ripples = [];
-  const maxLive = lite ? 3 : 6;
+  const maxLive = 6;
 
   function spawn(now) {
     const b = bodies[Math.floor(Math.random() * bodies.length)];
@@ -251,33 +240,33 @@ export function mountOrrery(svg, { reduceMotion, finePointer }) {
     }
   }
 
-  /* ---------- pointer parallax (desktop only) ---------- */
+  /* ---------- pointer parallax (mouse, pen or touch) ---------- */
   const par = { tx: 0, ty: 0, x: 0, y: 0 };
   const hero = svg.closest(".hero") || svg;
-  if (finePointer.matches && !lite) {
-    hero.addEventListener("pointermove", (e) => {
+  hero.addEventListener(
+    "pointermove",
+    (e) => {
       const r = hero.getBoundingClientRect();
       par.tx = ((e.clientX - r.left) / r.width - 0.5) * 18;
       par.ty = ((e.clientY - r.top) / r.height - 0.5) * 12;
-    });
-    hero.addEventListener("pointerleave", () => {
-      par.tx = 0;
-      par.ty = 0;
-    });
-  }
+    },
+    { passive: true },
+  );
+  const settle = () => {
+    par.tx = 0;
+    par.ty = 0;
+  };
+  hero.addEventListener("pointerleave", settle);
+  hero.addEventListener("pointercancel", settle);
 
   /* ---------- loop ---------- */
-  const frameBudget = lite ? 1000 / 32 : 0;
   let last = performance.now();
-  let lastPaint = 0;
   let nextSpawn = last + 1400; // let the entrance settle first
   let raf = 0;
   let visible = true;
 
   function frame(now) {
     raf = requestAnimationFrame(frame);
-    if (frameBudget && now - lastPaint < frameBudget) return;
-    lastPaint = now;
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
 
@@ -316,6 +305,5 @@ export function mountOrrery(svg, { reduceMotion, finePointer }) {
     visible ? start() : stop();
   }).observe(svg);
   document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
-  reduceMotion.addEventListener?.("change", (e) => (e.matches ? stop() : start()));
   start();
 }

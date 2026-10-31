@@ -9,8 +9,6 @@ import { mountOrrery } from "./orrery.js";
 
 const root = document.documentElement;
 window.__dlReady = true;
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
 /* ---------- theme ---------- */
 const themeBtn = document.getElementById("theme-toggle");
@@ -43,7 +41,7 @@ function syncThemeLabel() {
 
 function switchTheme(next, originEl) {
   const apply = () => paintTheme(next);
-  if (reduceMotion.matches || !document.startViewTransition) {
+  if (!document.startViewTransition) {
     apply();
     return;
   }
@@ -109,7 +107,7 @@ applyLang(root.lang === "zh-CN" ? "zh-CN" : "en");
 langBtn.addEventListener("click", () => {
   const next = root.lang === "zh-CN" ? "en" : "zh-CN";
   const swap = () => applyLang(next);
-  if (!reduceMotion.matches && document.startViewTransition) document.startViewTransition(swap);
+  if (document.startViewTransition) document.startViewTransition(swap);
   else swap();
   try {
     localStorage.setItem("dl-lang", next);
@@ -123,7 +121,7 @@ document.querySelectorAll(".reveal-group").forEach((group) => {
 });
 
 const revealables = document.querySelectorAll(".reveal, .reveal-head");
-if (reduceMotion.matches || !("IntersectionObserver" in window)) {
+if (!("IntersectionObserver" in window)) {
   revealables.forEach((el) => el.classList.add("is-in"));
 } else {
   const io = new IntersectionObserver(
@@ -161,15 +159,17 @@ onScroll();
 window.addEventListener("scroll", onScroll, { passive: true });
 
 /* ---------- pointer spotlight on tiles and cards ---------- */
-if (finePointer.matches && !reduceMotion.matches) {
-  document.querySelectorAll(".tile, .equation, .shot__frame").forEach((el) => {
-    el.addEventListener("pointermove", (e) => {
+document.querySelectorAll(".tile, .equation, .shot__frame").forEach((el) => {
+  el.addEventListener(
+    "pointermove",
+    (e) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty("--mx", `${e.clientX - r.left}px`);
       el.style.setProperty("--my", `${e.clientY - r.top}px`);
-    });
-  });
-}
+    },
+    { passive: true },
+  );
+});
 
 /* ---------- orrery ---------- */
-mountOrrery(document.getElementById("orrery"), { reduceMotion, finePointer });
+mountOrrery(document.getElementById("orrery"));

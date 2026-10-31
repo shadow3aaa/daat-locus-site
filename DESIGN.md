@@ -34,7 +34,8 @@ between them. The centre uses the project's own logo disc.
   and a warm amber reserved for "boundary / approval" moments.
 - Type: an editorial serif for statements, a plain sans for reading, mono for
   labels; the pixel wordmark stays as is.
-- Motion is slow and orbital; with `prefers-reduced-motion` the orrery is a still image.
+- Motion is slow and orbital and plays in full on every device; it only pauses
+  while the orrery is off-screen or the tab is hidden.
 
 ## Narrative
 

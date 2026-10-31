@@ -19,7 +19,7 @@
   --btn-bg: #f1ecec;
   --btn-fg: #0c0b0b;
   --btn-bg-hover: #ffffff;
-  --nav-bg: rgba(12, 11, 11, 0.72);
+  --nav-bg: rgba(12, 11, 11, 0.8);
   --spot: rgba(241, 236, 236, 0.06);
   --shadow-shot: 0 40px 120px -40px rgba(59, 99, 232, 0.35);
   --bg-wash-a: rgba(142, 165, 255, 0.08);
@@ -57,7 +57,7 @@
   --btn-bg: #1c1918;
   --btn-fg: #f6f2ec;
   --btn-bg-hover: #000000;
-  --nav-bg: rgba(246, 242, 236, 0.78);
+  --nav-bg: rgba(246, 242, 236, 0.86);
   --spot: rgba(120, 90, 50, 0.07);
   --shadow-shot: 0 36px 90px -36px rgba(90, 64, 36, 0.32);
   --bg-wash-a: rgba(234, 190, 120, 0.22);
@@ -113,7 +113,6 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
 }
 
 body::before {
@@ -278,8 +277,8 @@ main,
 }
 .nav.is-scrolled {
   background: var(--nav-bg);
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom-color: var(--line);
 }
 .nav__brand img {
@@ -389,7 +388,7 @@ main,
     width: 118px;
   }
 }
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .nav__gh {
     display: none;
   }
@@ -504,14 +503,16 @@ main,
 
 .orrery {
   position: relative;
-  margin: 0 -8vw 0 -4vw;
+  /* bleed into the hero's padding, never past the viewport */
+  margin: 0 calc(-1 * var(--pad)) 0 -4vw;
   z-index: 1;
 }
 .orrery svg {
   width: 100%;
   height: auto;
   display: block;
-  overflow: visible;
+  /* everything is drawn inside the viewBox; keep the canvas to its own box */
+  overflow: hidden;
 }
 @media (max-width: 980px) {
   .hero {
@@ -520,7 +521,7 @@ main,
     padding-top: 24px;
   }
   .orrery {
-    margin: 8px -14vw 0;
+    margin: 8px calc(-1 * var(--pad)) 0;
   }
 }
 
@@ -551,7 +552,6 @@ main,
     opacity: calc(var(--o) * 0.3);
   }
 }
-.orrery .is-paused .o-stars circle,
 #orrery.is-paused circle {
   animation-play-state: paused;
 }
@@ -672,8 +672,8 @@ main,
   .o-node__label {
     font-size: 24px;
   }
-  .o-labels {
-    display: none;
+  .o-labels text {
+    font-size: 21px;
   }
 }
 
@@ -808,45 +808,6 @@ main,
   transform: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .js .intro,
-  .js .intro-lines .ln,
-  .js .reveal,
-  .js .reveal-head .kicker,
-  .js .reveal-head .section__lede,
-  .js .reveal-head .ln,
-  .js .o-core__body,
-  .js .o-core__glow,
-  .js .o-nodes,
-  .js .o-labels,
-  .js .o-stars {
-    opacity: 1 !important;
-    transform: none !important;
-    clip-path: none !important;
-    transition: none !important;
-  }
-  .js .o-orbits ellipse,
-  .js .o-orbits path {
-    stroke-dashoffset: 0 !important;
-    transition: none !important;
-  }
-  .js .reveal-head .kicker::after {
-    transform: none !important;
-  }
-  .o-stars circle,
-  .dot::after {
-    animation: none !important;
-  }
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-  }
-}
-
 /* =========================================================
    Names marquee
    ========================================================= */
@@ -897,24 +858,6 @@ main,
     transform: translateX(-50%);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .names__track {
-    animation: none;
-    -webkit-mask-image: none;
-    mask-image: none;
-    flex-wrap: wrap;
-    width: auto;
-    padding: 0 var(--pad);
-  }
-  .names__row + .names__row {
-    display: none;
-  }
-  .names__row {
-    flex-wrap: wrap;
-    gap: 8px 32px;
-  }
-}
-
 /* =========================================================
    Sections
    ========================================================= */
@@ -1394,15 +1337,6 @@ h3 {
 .mesh__svg text {
   font: 400 15px var(--sans);
   fill: var(--text);
-}
-@media (prefers-reduced-motion: reduce) {
-  .mesh__pulses {
-    display: none;
-  }
-  .mesh__relay .mesh__ring {
-    animation: none;
-    opacity: 0;
-  }
 }
 @media (max-width: 600px) {
   .mesh__svg text {
