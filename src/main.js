@@ -118,27 +118,83 @@ langBtn.addEventListener("click", () => {
 });
 
 /* ---------- entrance + scroll reveal ---------- */
+const nav = document.querySelector(".nav");
 // Stagger siblings inside a group so they arrive one after another.
 document.querySelectorAll(".reveal-group").forEach((group) => {
   [...group.querySelectorAll(":scope > .reveal")].forEach((el, i) => el.style.setProperty("--d", `${i * 90}ms`));
 });
 
+// Two-way reveal: elements animate in when they enter the reading band and
+// animate out in the direction they leave, every time.
 const revealables = document.querySelectorAll(".reveal, .reveal-head");
 if (!("IntersectionObserver" in window)) {
   revealables.forEach((el) => el.classList.add("is-in"));
 } else {
+  const thresholds = [];
+  for (let i = 0; i <= 10; i++) thresholds.push(i / 100);
+  for (let i = 3; i <= 20; i++) thresholds.push(i / 20);
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
-        if (e.isIntersecting) {
-          e.target.classList.add("is-in");
-          io.unobserve(e.target);
+        const el = e.target;
+        const h = e.boundingClientRect.height || 1;
+        const seen = e.isIntersecting ? e.intersectionRect.height : 0;
+        const isIn = el.classList.contains("is-in");
+        // Hysteresis: enter late, leave late, so the boundary never flickers.
+        if (!isIn && seen >= Math.min(120, h * 0.2)) {
+          el.classList.remove("is-out-up");
+          el.classList.add("is-in");
+        } else if ((isIn || !e.isIntersecting) && seen < Math.min(48, h * 0.08)) {
+          const r = e.rootBounds;
+          const above = r ? e.boundingClientRect.top + h / 2 < r.top + r.height / 2 : false;
+          el.classList.remove("is-in");
+          el.classList.toggle("is-out-up", above);
         }
       }
     },
-    { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+    { rootMargin: "-15% 0px -10% 0px", threshold: thresholds },
   );
-  revealables.forEach((el) => io.observe(el));
+  // The footer wordmark ends the page, so it can never reach the reading band; use the full viewport.
+  const edge = new IntersectionObserver((entries) => entries.forEach((e) => e.target.classList.toggle("is-in", e.isIntersecting)), {
+    threshold: 0.3,
+  });
+  revealables.forEach((el) => (el.classList.contains("footer__giant") ? edge : io).observe(el));
+
+  // A jump (anchor link, Home key) skips elements without the observer seeing them leave.
+  // Once scrolling settles, point every hidden element at the side it now sits on.
+  let settle = 0;
+  addEventListener(
+    "scroll",
+    () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        for (const el of revealables) {
+          if (el.classList.contains("is-in")) continue;
+          el.classList.toggle("is-out-up", el.getBoundingClientRect().bottom < innerHeight / 2);
+        }
+      }, 140);
+    },
+    { passive: true },
+  );
+}
+
+// The hero eases away as you scroll past it and comes back when you return.
+const scrub = [
+  { el: document.querySelector(".hero__text"), lift: 90, y: 0 },
+  { el: document.querySelector(".orrery"), lift: 40, y: 0, inner: document.getElementById("orrery") },
+];
+function scrubHero() {
+  const line = nav.offsetHeight;
+  for (const s of scrub) {
+    if (!s.el) continue;
+    const r = s.el.getBoundingClientRect();
+    const top = r.top - s.y; // position without our own offset
+    const p = Math.min(1, Math.max(0, (line - top) / (r.height * 0.85)));
+    s.y = -p * s.lift;
+    s.el.style.transform = p ? `translate3d(0, ${s.y.toFixed(1)}px, 0)` : "";
+    s.el.style.opacity = p ? (1 - p * 0.9).toFixed(3) : "";
+    if (s.inner) s.inner.style.transform = p ? `scale(${(1 - p * 0.08).toFixed(4)})` : "";
+  }
 }
 
 // Start the hero entrance once fonts are ready (or after a short grace period).
@@ -148,7 +204,6 @@ Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => set
 );
 
 /* ---------- nav: scrolled state and reading progress ---------- */
-const nav = document.querySelector(".nav");
 let ticking = false;
 const onScroll = () => {
   if (ticking) return;
@@ -157,6 +212,7 @@ const onScroll = () => {
     const max = document.documentElement.scrollHeight - innerHeight;
     nav.classList.toggle("is-scrolled", scrollY > 24);
     nav.style.setProperty("--p", max > 0 ? (scrollY / max).toFixed(4) : "0");
+    scrubHero();
     ticking = false;
   });
 };
