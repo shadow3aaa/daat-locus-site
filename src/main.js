@@ -8,8 +8,73 @@ import { zh } from "./i18n.js";
 import { mountOrrery } from "./orrery.js";
 
 const root = document.documentElement;
-root.classList.add("js");
+window.__dlReady = true;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+/* ---------- theme ---------- */
+const themeBtn = document.getElementById("theme-toggle");
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const systemLight = window.matchMedia("(prefers-color-scheme: light)");
+
+function storedTheme() {
+  try {
+    const t = localStorage.getItem("dl-theme");
+    return t === "light" || t === "dark" ? t : null;
+  } catch {
+    return null;
+  }
+}
+
+function paintTheme(theme) {
+  root.dataset.theme = theme;
+  if (themeMeta) themeMeta.content = theme === "light" ? "#f6f2ec" : "#0c0b0b";
+  syncThemeLabel();
+}
+
+function syncThemeLabel() {
+  const light = root.dataset.theme === "light";
+  const zhUI = root.lang === "zh-CN";
+  themeBtn.setAttribute(
+    "aria-label",
+    light ? (zhUI ? "切换到深色模式" : "Switch to dark theme") : zhUI ? "切换到浅色模式" : "Switch to light theme",
+  );
+}
+
+function switchTheme(next, originEl) {
+  const apply = () => paintTheme(next);
+  if (reduceMotion.matches || !document.startViewTransition) {
+    apply();
+    return;
+  }
+  const r = originEl.getBoundingClientRect();
+  const x = r.left + r.width / 2;
+  const y = r.top + r.height / 2;
+  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  root.classList.add("theme-switching");
+  const vt = document.startViewTransition(apply);
+  vt.ready
+    .then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 620, easing: "cubic-bezier(0.65, 0, 0.35, 1)", pseudoElement: "::view-transition-new(root)" },
+      );
+    })
+    .catch(() => {});
+  vt.finished.finally(() => root.classList.remove("theme-switching"));
+}
+
+themeBtn.addEventListener("click", () => {
+  const next = root.dataset.theme === "light" ? "dark" : "light";
+  try {
+    localStorage.setItem("dl-theme", next);
+  } catch {}
+  switchTheme(next, themeBtn);
+});
+
+systemLight.addEventListener?.("change", (e) => {
+  if (!storedTheme()) paintTheme(e.matches ? "light" : "dark");
+});
 
 /* ---------- language ---------- */
 const en = {};
@@ -20,8 +85,8 @@ textNodes.forEach((el) => (en[el.dataset.i18n] = el.textContent.trim()));
 htmlNodes.forEach((el) => (en[el.dataset.i18nHtml] = el.innerHTML.trim()));
 altNodes.forEach((el) => (en[el.dataset.i18nAlt] = el.getAttribute("alt")));
 const enTitle = document.title;
-
-const toggle = document.getElementById("lang-toggle");
+const enDesc = document.querySelector('meta[name="description"]').content;
+const langBtn = document.getElementById("lang-toggle");
 
 function applyLang(lang) {
   const dict = lang === "zh-CN" ? zh : en;
@@ -30,22 +95,34 @@ function applyLang(lang) {
   htmlNodes.forEach((el) => (el.innerHTML = pick(el.dataset.i18nHtml)));
   altNodes.forEach((el) => el.setAttribute("alt", pick(el.dataset.i18nAlt)));
   root.lang = lang;
-  document.title = lang === "zh-CN" ? "Daat Locus — 一个对话，许多 Actor，每一台设备" : enTitle;
-  toggle.textContent = lang === "zh-CN" ? "EN" : "中文";
-  toggle.setAttribute("aria-label", lang === "zh-CN" ? "Switch to English" : "切换到中文");
+  const isZh = lang === "zh-CN";
+  document.title = isZh ? "Daat Locus — 一个对话，许多 Actor，每一台设备" : enTitle;
+  document.querySelector('meta[name="description"]').content = isZh
+    ? "Daat Locus 是一个开源 AI 助手。在一个对话里提出请求；遇到大任务，它会召集一支 AI 智能体小团队，在你的电脑和手机上同时开工。"
+    : enDesc;
+  langBtn.textContent = isZh ? "EN" : "中文";
+  langBtn.setAttribute("aria-label", isZh ? "Switch to English" : "切换到中文");
+  syncThemeLabel();
 }
 
 applyLang(root.lang === "zh-CN" ? "zh-CN" : "en");
-toggle.addEventListener("click", () => {
+langBtn.addEventListener("click", () => {
   const next = root.lang === "zh-CN" ? "en" : "zh-CN";
-  applyLang(next);
+  const swap = () => applyLang(next);
+  if (!reduceMotion.matches && document.startViewTransition) document.startViewTransition(swap);
+  else swap();
   try {
     localStorage.setItem("dl-lang", next);
   } catch {}
 });
 
-/* ---------- reveal on scroll ---------- */
-const revealables = document.querySelectorAll(".reveal");
+/* ---------- entrance + scroll reveal ---------- */
+// Stagger siblings inside a group so they arrive one after another.
+document.querySelectorAll(".reveal-group").forEach((group) => {
+  [...group.querySelectorAll(":scope > .reveal")].forEach((el, i) => el.style.setProperty("--d", `${i * 90}ms`));
+});
+
+const revealables = document.querySelectorAll(".reveal, .reveal-head");
 if (reduceMotion.matches || !("IntersectionObserver" in window)) {
   revealables.forEach((el) => el.classList.add("is-in"));
 } else {
@@ -58,16 +135,41 @@ if (reduceMotion.matches || !("IntersectionObserver" in window)) {
         }
       }
     },
-    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
   );
   revealables.forEach((el) => io.observe(el));
 }
 
-/* ---------- nav state ---------- */
+// Start the hero entrance once fonts are ready (or after a short grace period).
+const ready = () => root.classList.add("is-ready");
+Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 700))]).then(() =>
+  requestAnimationFrame(ready),
+);
+
+/* ---------- nav ---------- */
 const nav = document.querySelector(".nav");
-const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 24);
+let ticking = false;
+const onScroll = () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    nav.classList.toggle("is-scrolled", window.scrollY > 24);
+    ticking = false;
+  });
+};
 onScroll();
 window.addEventListener("scroll", onScroll, { passive: true });
 
+/* ---------- pointer spotlight on tiles and cards ---------- */
+if (finePointer.matches && !reduceMotion.matches) {
+  document.querySelectorAll(".tile, .equation, .shot__frame").forEach((el) => {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      el.style.setProperty("--my", `${e.clientY - r.top}px`);
+    });
+  });
+}
+
 /* ---------- orrery ---------- */
-mountOrrery(document.getElementById("orrery"), reduceMotion);
+mountOrrery(document.getElementById("orrery"), { reduceMotion, finePointer });
