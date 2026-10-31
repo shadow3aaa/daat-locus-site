@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Daat Locus — one conversation, many Actors, every device</title>
-    <meta name="description" content="Daat Locus is an open-source AI assistant. Ask in one conversation; for bigger jobs it brings in a small team of AI agents that work side by side across your computers and phone." />
+    <meta name="description" content="Daat Locus is an open-source AI assistant. Ask in one conversation; bigger jobs go to a crew of AI agents, called Actors, that work in parallel across your computers and phone." />
     <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#0c0b0b" />
+    <meta name="theme-color" content="#0a0909" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://daat-locus.shadow3.work/" />
     <meta property="og:type" content="website" />
@@ -30,7 +30,7 @@
         d.dataset.theme = theme;
         d.lang = lang || ((navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh-CN" : "en");
         var m = document.querySelector('meta[name="theme-color"]');
-        if (m) m.content = theme === "light" ? "#f6f2ec" : "#0c0b0b";
+        if (m) m.content = theme === "light" ? "#f4f0e8" : "#0a0909";
         // If the script bundle never arrives, show everything rather than a blank page.
         setTimeout(function () {
           if (!window.__dlReady) d.classList.remove("js");
@@ -46,6 +46,7 @@
         <img class="for-dark" src="/wordmark-dark.svg" alt="Daat Locus" width="590" height="110" />
         <img class="for-light" src="/wordmark-light.svg" alt="Daat Locus" width="590" height="110" />
       </a>
+      <p class="nav__status" aria-hidden="true"><span class="nav__led"></span><span data-i18n="nav.status">Core online</span><span class="nav__clock" id="clock">00:00:00</span></p>
       <nav class="nav__links" aria-label="Sections">
         <a href="#how" data-i18n="nav.how">How it works</a>
         <a href="#safety" data-i18n="nav.safety">Safety</a>
@@ -60,18 +61,20 @@
         <button class="lang" type="button" id="lang-toggle" aria-label="切换到中文">中文</button>
         <a class="btn btn--ghost btn--sm nav__gh" href="https://github.com/shadow3aaa/DaatLocus" rel="noopener">GitHub</a>
       </div>
+      <span class="nav__progress" aria-hidden="true"></span>
     </header>
 
     <main id="main">
       <!-- HERO -->
       <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__grid" aria-hidden="true"></div>
         <div class="hero__text">
           <p class="eyebrow intro" style="--i: 0">
             <span class="dot" aria-hidden="true"></span>
             <span data-i18n="hero.eyebrow">Open source · v0.5.0</span>
           </p>
           <h1 id="hero-title" class="display intro-lines" data-i18n-html="hero.title"><span class="ln">One conversation.</span><span class="ln"><em>Many Actors.</em></span><span class="ln">Every device.</span></h1>
-          <p class="lede intro" style="--i: 4" data-i18n="hero.lede">Ask Daat Locus anything in one conversation. For bigger jobs it brings in a small team of AI agents — called Actors — that work side by side on your computers and phone, then report back to you.</p>
+          <p class="lede intro" style="--i: 4" data-i18n="hero.lede">Ask Daat Locus anything in one conversation. Bigger jobs go to a crew of AI agents, called Actors, that work in parallel on your computers and phone and report back to the same conversation.</p>
           <div class="hero__cta intro" style="--i: 5">
             <a class="btn btn--primary" href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener">
               <span data-i18n="hero.download">Download v0.5.0</span>
@@ -99,6 +102,15 @@
             </defs>
             <g id="orrery-scene"></g>
           </svg>
+          <div class="hud hud--stats intro" style="--i: 3">
+            <div><span class="hud__k" data-i18n="hud.actors">Actors</span><b>09</b></div>
+            <div><span class="hud__k" data-i18n="hud.devices">Devices</span><b>04</b></div>
+            <div><span class="hud__k" data-i18n="hud.flight">In flight</span><b id="hud-flight">00</b></div>
+          </div>
+          <div class="log intro" style="--i: 6">
+            <div class="log__head"><span class="nav__led"></span><span data-i18n="hud.log">Live activity</span><span class="log__sim" data-i18n="hud.sim">simulated</span></div>
+            <ol class="log__lines" id="log"></ol>
+          </div>
         </figure>
       </section>
 
@@ -119,55 +131,89 @@
       <section class="section motion" id="how" aria-labelledby="how-title">
         <header class="section__head reveal-head">
           <p class="kicker"><span class="kicker__n">01</span><span data-i18n="how.kicker">How it works</span></p>
-          <h2 id="how-title" class="h2" data-i18n-html="how.title"><span class="ln">You ask once.</span><span class="ln"><em>The work gets shared out.</em></span></h2>
+          <h2 id="how-title" class="h2" data-i18n-html="how.title"><span class="ln">You ask once.</span><span class="ln"><em>A crew splits the work.</em></span></h2>
         </header>
         <div class="motion__grid">
           <ol class="steps reveal-group">
             <li class="step reveal">
-              <span class="step__n">I</span>
+              <span class="step__n">01</span>
               <div>
                 <h3 data-i18n="how.s1.t">Just ask</h3>
-                <p data-i18n="how.s1.d">Talk to Daat Locus the way you would to a capable assistant. Simple questions get a straight answer.</p>
+                <p data-i18n="how.s1.d">Talk to Daat Locus the way you would talk to a capable assistant. Simple questions get a direct answer.</p>
               </div>
             </li>
             <li class="step reveal">
-              <span class="step__n">II</span>
+              <span class="step__n">02</span>
               <div>
-                <h3 data-i18n="how.s2.t">A team comes together</h3>
-                <p data-i18n="how.s2.d">For bigger tasks it brings in Actors and gives each a fitting name — Hermes plans the trip, Metis compares the options — choosing a suitable model for each by weighing ability against cost.</p>
+                <h3 data-i18n="how.s2.t">A crew assembles</h3>
+                <p data-i18n="how.s2.d">For bigger jobs it creates Actors and names each one for its task: Hermes plans the trip, Metis compares the options. Each Actor gets a model chosen for the job, balancing ability and cost.</p>
               </div>
             </li>
             <li class="step reveal">
-              <span class="step__n">III</span>
+              <span class="step__n">03</span>
               <div>
                 <h3 data-i18n="how.s3.t">Everyone works at once</h3>
-                <p data-i18n="how.s3.d">Each Actor takes its own part and works at the same time as the others, on whichever of your devices suits the job.</p>
+                <p data-i18n="how.s3.d">Each Actor handles its own part in parallel with the others, on whichever of your devices fits the job.</p>
               </div>
             </li>
             <li class="step reveal">
-              <span class="step__n">IV</span>
+              <span class="step__n">04</span>
               <div>
-                <h3 data-i18n="how.s4.t">The answer comes back to you</h3>
-                <p data-i18n="how.s4.d">Updates and results arrive in the same conversation, in plain language. Curious? Open any Actor to see what it is up to.</p>
+                <h3 data-i18n="how.s4.t">Results come back to you</h3>
+                <p data-i18n="how.s4.d">Progress and results land in the same conversation, in plain language. Open any Actor to see exactly what it is doing.</p>
               </div>
             </li>
           </ol>
-          <figure class="shot reveal">
-            <div class="shot__frame">
-              <div class="shot__bar" aria-hidden="true"><i></i><i></i><i></i></div>
-              <img class="for-dark" src="/screenshot-dark.png" width="2160" height="1350" loading="lazy" decoding="async" alt="Daat Locus letting you know that Hermes, Metis and Demeter are working on three requests at the same time." data-i18n-alt="how.alt" />
-              <img class="for-light" src="/screenshot-light.png" width="2160" height="1350" loading="lazy" decoding="async" alt="Daat Locus letting you know that Hermes, Metis and Demeter are working on three requests at the same time." data-i18n-alt="how.alt" />
+
+          <div class="run reveal" id="run" aria-hidden="true">
+            <div class="run__bar">
+              <span class="run__dots"><i></i><i></i><i></i></span>
+              <span class="run__title" data-i18n="run.title">session · weekend planning</span>
+              <span class="run__live"><span class="nav__led"></span>live</span>
             </div>
-            <figcaption data-i18n="how.cap">Three requests, three Actors, one conversation.</figcaption>
-          </figure>
+            <div class="run__body">
+              <p class="run__msg run__msg--you" data-step="0"><span class="run__who" data-i18n="run.you">You</span><span data-i18n="run.ask">Plan a weekend in Kyoto, compare headphones under $200, and plan five weeknight dinners for two.</span></p>
+              <p class="run__msg run__msg--core" data-step="1"><span class="run__who">Daat Locus</span><span data-i18n="run.split">That's three jobs. Starting three Actors.</span></p>
+              <div class="lanes">
+                <div class="lane" data-lane="0">
+                  <span class="lane__name">Hermes</span><span class="lane__model" data-i18n="run.m.hi">strong model</span>
+                  <span class="lane__state">—</span>
+                  <span class="lane__track"><span class="lane__fill"></span></span>
+                  <span class="lane__task" data-i18n="run.t0">Kyoto weekend</span>
+                </div>
+                <div class="lane" data-lane="1">
+                  <span class="lane__name">Metis</span><span class="lane__model" data-i18n="run.m.mid">balanced model</span>
+                  <span class="lane__state">—</span>
+                  <span class="lane__track"><span class="lane__fill"></span></span>
+                  <span class="lane__task" data-i18n="run.t1">Headphones under $200</span>
+                </div>
+                <div class="lane" data-lane="2">
+                  <span class="lane__name">Demeter</span><span class="lane__model" data-i18n="run.m.lo">fast model</span>
+                  <span class="lane__state">—</span>
+                  <span class="lane__track"><span class="lane__fill"></span></span>
+                  <span class="lane__task" data-i18n="run.t2">Dinners for two</span>
+                </div>
+              </div>
+              <p class="run__msg run__msg--core run__msg--done" data-step="2"><span class="run__who">Daat Locus</span><span data-i18n="run.done">The dinner plan and headphone shortlist are ready. Hermes is still checking opening hours in Kyoto.</span></p>
+            </div>
+          </div>
         </div>
+
+        <figure class="shot reveal" id="shot">
+          <div class="shot__frame">
+            <div class="shot__bar" aria-hidden="true"><i></i><i></i><i></i><span>Daat Locus</span></div>
+            <img class="for-dark" src="/screenshot-dark.png" width="2160" height="1350" loading="lazy" decoding="async" alt="Daat Locus telling you that Hermes, Metis and Demeter are working on three requests at the same time." data-i18n-alt="how.alt" />
+            <img class="for-light" src="/screenshot-light.png" width="2160" height="1350" loading="lazy" decoding="async" alt="Daat Locus telling you that Hermes, Metis and Demeter are working on three requests at the same time." data-i18n-alt="how.alt" />
+          </div>
+          <figcaption><span class="shot__tag" data-i18n="how.tag">Real screenshot</span><span data-i18n="how.cap">Three requests, three Actors, one conversation.</span></figcaption>
+        </figure>
       </section>
 
       <!-- TOOLS -->
       <section class="section anatomy" aria-labelledby="tools-title">
         <header class="section__head reveal-head">
           <p class="kicker"><span class="kicker__n">02</span><span data-i18n="tools.kicker">Tools</span></p>
-          <h2 id="tools-title" class="h2" data-i18n-html="tools.title"><span class="ln">Every Actor comes</span><span class="ln"><em>with the right tools.</em></span></h2>
+          <h2 id="tools-title" class="h2" data-i18n-html="tools.title"><span class="ln">Every Actor arrives</span><span class="ln"><em>with the right tools.</em></span></h2>
         </header>
         <div class="equation reveal" aria-hidden="true">
           <div class="eq__core">
@@ -183,7 +229,7 @@
           <span class="eq__op">=</span>
           <div class="eq__actor">
             <span class="eq__name">Hephaestus</span>
-            <span class="eq__label" data-i18n="tools.actor">an Actor</span>
+            <span class="eq__label"><span class="nav__led"></span><span data-i18n="tools.actor">an Actor, ready</span></span>
           </div>
         </div>
         <div class="cols3 reveal-group">
@@ -192,12 +238,12 @@
             <p data-i18n="tools.a.d">Reading and editing files, running commands, browsing the web and using apps on screen are all built in.</p>
           </article>
           <article class="note reveal">
-            <h3 data-i18n="tools.b.t">Add your own</h3>
-            <p data-i18n="tools.b.d">Daat Locus fully supports MCP. Add any standard MCP server and every Actor on that device can put it to work.</p>
+            <h3 data-i18n="tools.b.t">Bring your own</h3>
+            <p data-i18n="tools.b.d">Daat Locus fully supports MCP. Add any standard MCP server and every Actor on that device can use it.</p>
           </article>
           <article class="note reveal">
-            <h3 data-i18n="tools.c.t">One clear set of rules</h3>
-            <p data-i18n="tools.c.d">Actors on a device share the same tools, and what they may touch is set by that device's permissions — the same for everyone.</p>
+            <h3 data-i18n="tools.c.t">One set of rules per device</h3>
+            <p data-i18n="tools.c.d">All Actors on a device share the same tools. That device's permissions decide what they can touch, and the rules are the same for every Actor.</p>
           </article>
         </div>
       </section>
@@ -206,43 +252,43 @@
       <section class="section boundaries" id="safety" aria-labelledby="safety-title">
         <header class="section__head reveal-head">
           <p class="kicker kicker--amber"><span class="kicker__n">03</span><span data-i18n="safety.kicker">Safety</span></p>
-          <h2 id="safety-title" class="h2" data-i18n-html="safety.title"><span class="ln">Capable,</span><span class="ln"><em>but always within bounds.</em></span></h2>
-          <p class="section__lede" data-i18n="safety.lede">Actors work inside the sandbox your operating system provides. When a task needs to go further, it has to ask — and the final say stays with you.</p>
+          <h2 id="safety-title" class="h2" data-i18n-html="safety.title"><span class="ln">Free to work.</span><span class="ln"><em>Fenced in by default.</em></span></h2>
+          <p class="section__lede" data-i18n="safety.lede">Actors work inside the sandbox your operating system provides. To go further they have to ask, and you always have the final say.</p>
         </header>
         <ol class="gates reveal-group">
           <li class="gate reveal">
             <span class="gate__ring" aria-hidden="true"></span>
-            <p class="gate__k" data-i18n="safety.g1.k">Sandbox</p>
+            <p class="gate__k"><span class="gate__n">G1</span><span data-i18n="safety.g1.k">Sandbox</span></p>
             <h3 data-i18n="safety.g1.t">Safe by default</h3>
-            <p data-i18n="safety.g1.d">Commands and file changes run in your system's own sandbox on Windows, macOS and Linux. If the sandbox isn't available, the command simply doesn't run.</p>
+            <p data-i18n="safety.g1.d">On Windows, macOS and Linux, commands and file changes run in the system's own sandbox. If the sandbox isn't available, the command doesn't run at all.</p>
           </li>
           <li class="gate reveal">
             <span class="gate__ring" aria-hidden="true"></span>
-            <p class="gate__k" data-i18n="safety.g2.k">Review</p>
+            <p class="gate__k"><span class="gate__n">G2</span><span data-i18n="safety.g2.k">Review</span></p>
             <h3 data-i18n="safety.g2.t">A second look</h3>
-            <p data-i18n="safety.g2.d">When an Actor needs more access, a separate check looks at exactly what is being asked for, then approves or declines it.</p>
+            <p data-i18n="safety.g2.d">When an Actor needs more access, an independent review checks exactly what it is asking for, then approves or declines.</p>
           </li>
           <li class="gate reveal">
             <span class="gate__ring" aria-hidden="true"></span>
-            <p class="gate__k" data-i18n="safety.g3.k">Your call</p>
+            <p class="gate__k"><span class="gate__n">G3</span><span data-i18n="safety.g3.k">Your call</span></p>
             <h3 data-i18n="safety.g3.t">You have the last word</h3>
-            <p data-i18n="safety.g3.d">If a request is declined, the Actor can bring it to Daat Locus, which checks what you have already allowed — and asks you whenever it isn't clear.</p>
+            <p data-i18n="safety.g3.d">If a request is declined, the Actor can take it to Daat Locus. Daat Locus checks it against what you've already allowed and asks you when it isn't sure.</p>
           </li>
           <li class="gate reveal">
             <span class="gate__ring" aria-hidden="true"></span>
-            <p class="gate__k" data-i18n="safety.g4.k">No surprises</p>
-            <h3 data-i18n="safety.g4.t">Nothing happens twice</h3>
-            <p data-i18n="safety.g4.d">Granting access never quietly re-runs anything. If work is interrupted, it is noted rather than repeated.</p>
+            <p class="gate__k"><span class="gate__n">G4</span><span data-i18n="safety.g4.k">No replays</span></p>
+            <h3 data-i18n="safety.g4.t">Nothing runs twice by accident</h3>
+            <p data-i18n="safety.g4.d">Approving a request never quietly re-runs anything. If an action was interrupted and its result is unclear, it is recorded, not repeated.</p>
           </li>
         </ol>
-        <p class="aside reveal" data-i18n-html="safety.admin"><strong>Administrator access is never automatic.</strong> On desktop, an Actor can ask to run one specific command with elevated rights. Each request is reviewed on its own and never becomes blanket permission.</p>
+        <p class="aside reveal" data-i18n-html="safety.admin"><strong>Administrator access is never automatic.</strong> On desktop, an Actor can ask to run one specific command with elevated rights. Each request is reviewed on its own and never turns into blanket permission.</p>
       </section>
 
       <!-- DEVICES -->
       <section class="section devices" id="devices" aria-labelledby="dev-title">
         <header class="section__head reveal-head">
           <p class="kicker"><span class="kicker__n">04</span><span data-i18n="dev.kicker">Devices</span></p>
-          <h2 id="dev-title" class="h2" data-i18n-html="dev.title"><span class="ln">Laptop, desktop, phone —</span><span class="ln"><em>one assistant.</em></span></h2>
+          <h2 id="dev-title" class="h2" data-i18n-html="dev.title"><span class="ln">Laptop, desktop, phone.</span><span class="ln"><em>One assistant.</em></span></h2>
         </header>
         <div class="devices__grid">
           <div class="mesh reveal" aria-hidden="true">
@@ -253,31 +299,33 @@
               <g class="mesh__pulses">
                 <circle r="3.2"><animateMotion dur="3.6s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.2 1" path="M110 90 L260 180 L410 270" /></circle>
                 <circle r="3.2"><animateMotion dur="4.4s" begin="1.2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.2 1" path="M410 90 L260 180 L110 270" /></circle>
+                <circle r="3.2"><animateMotion dur="5s" begin="2.4s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.2 1" path="M110 270 L260 180 L410 90" /></circle>
               </g>
               <g class="mesh__relay">
                 <circle cx="260" cy="180" r="36" class="mesh__ring" />
                 <circle cx="260" cy="180" r="34" />
                 <path class="mesh__lock" d="M253 176v-5a7 7 0 0 1 14 0v5M250 176h20v13h-20z" />
+                <text x="260" y="238" text-anchor="middle" class="mesh__cap" data-i18n="dev.relay">E2E RELAY</text>
               </g>
               <g class="mesh__dev">
-                <rect x="40" y="62" width="140" height="56" rx="14" /><text x="110" y="95" text-anchor="middle">Windows</text>
-                <rect x="340" y="62" width="140" height="56" rx="14" /><text x="410" y="95" text-anchor="middle">macOS</text>
-                <rect x="40" y="242" width="140" height="56" rx="14" /><text x="110" y="275" text-anchor="middle">Linux</text>
-                <rect x="340" y="242" width="140" height="56" rx="14" /><text x="410" y="275" text-anchor="middle">Android</text>
+                <rect x="40" y="62" width="140" height="56" rx="8" /><text x="110" y="95" text-anchor="middle">Windows</text>
+                <rect x="340" y="62" width="140" height="56" rx="8" /><text x="410" y="95" text-anchor="middle">macOS</text>
+                <rect x="40" y="242" width="140" height="56" rx="8" /><text x="110" y="275" text-anchor="middle">Linux</text>
+                <rect x="340" y="242" width="140" height="56" rx="8" /><text x="410" y="275" text-anchor="middle">Android</text>
               </g>
             </svg>
           </div>
           <div class="devices__text reveal-group">
             <div class="note reveal">
               <h3 data-i18n="dev.a.t">The same conversation everywhere</h3>
-              <p data-i18n="dev.a.d">Sign in with the same account on each device and you'll find the same assistant and the same conversation. If one device goes offline, another takes over on its own.</p>
+              <p data-i18n="dev.a.d">Sign in with the same account on each device and you get the same assistant and the same conversation. If one device goes offline, another takes over automatically.</p>
             </div>
             <div class="note reveal">
               <h3 data-i18n="dev.b.t">A private connection</h3>
-              <p data-i18n="dev.b.d">Your devices talk over end-to-end encrypted connections, through a relay you deploy yourself on Cloudflare Workers — no server to look after.</p>
+              <p data-i18n="dev.b.d">Your devices talk over end-to-end encrypted connections, through a relay you deploy yourself on Cloudflare Workers. There is no server to maintain.</p>
             </div>
             <div class="note reveal">
-              <h3 data-i18n="dev.c.t">Happy on its own</h3>
+              <h3 data-i18n="dev.c.t">Fine on its own</h3>
               <p data-i18n="dev.c.d">Only have one computer? Everything works locally, with no extra setup.</p>
             </div>
           </div>
@@ -288,33 +336,40 @@
       <section class="section hands" aria-labelledby="hands-title">
         <header class="section__head reveal-head">
           <p class="kicker"><span class="kicker__n">05</span><span data-i18n="hands.kicker">What Actors can do</span></p>
-          <h2 id="hands-title" class="h2" data-i18n-html="hands.title"><span class="ln">They can use a computer</span><span class="ln"><em>without taking over yours.</em></span></h2>
+          <h2 id="hands-title" class="h2" data-i18n-html="hands.title"><span class="ln">They use a computer</span><span class="ln"><em>without taking over yours.</em></span></h2>
         </header>
         <div class="tiles reveal">
           <article class="tile tile--wide">
-            <div class="tile__art tile__art--screens" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="tile__art tile__art--screens" aria-hidden="true"><span></span><span></span><span><i class="cursor"></i></span></div>
             <h3 data-i18n="hands.a.t">A screen of their own</h3>
-            <p data-i18n="hands.a.d">Actors operate desktop apps on a virtual screen, so your mouse and keyboard stay yours. Look in on them whenever you like.</p>
+            <p data-i18n="hands.a.d">Actors use desktop apps on a virtual screen, so your mouse and keyboard stay free. Look in on them whenever you like.</p>
           </article>
           <article class="tile">
+            <div class="tile__art tile__art--browser" aria-hidden="true"><span class="b-bar"></span><i class="b-you" data-i18n="hands.you">you</i><i class="b-actor">Iris</i></div>
             <h3 data-i18n="hands.b.t">A browser you share</h3>
-            <p data-i18n="hands.b.d">Actors browse in a shared browser on your device, and you can use it too, like any other browser.</p>
+            <p data-i18n="hands.b.d">Actors browse in a shared browser on your device. You can use it too, like any other browser.</p>
           </article>
           <article class="tile">
+            <div class="tile__art tile__art--read" aria-hidden="true"><span></span><span></span><span></span><b>&lt;script&gt;</b></div>
             <h3 data-i18n="hands.c.t">Careful web reading</h3>
             <p data-i18n="hands.c.d">Pages can be read as plain text without running their scripts, or opened in a separate, isolated view.</p>
           </article>
           <article class="tile">
+            <div class="tile__art tile__art--diff" aria-hidden="true"><span class="d-del"></span><span class="d-add"></span><span class="d-add"></span><span></span></div>
             <h3 data-i18n="hands.d.t">Files and commands</h3>
-            <p data-i18n="hands.d.d">Actors edit files and run commands in the places you allow, without overwriting changes made in the meantime.</p>
+            <p data-i18n="hands.d.d">Actors edit files and run commands only where you allow, and they won't overwrite changes made in the meantime.</p>
           </article>
           <article class="tile">
+            <div class="tile__art tile__art--phone" aria-hidden="true"><span><i></i></span></div>
             <h3 data-i18n="hands.e.t">Your phone, too</h3>
-            <p data-i18n="hands.e.d">On Android everything runs inside the app. Turn on phone control and Actors can operate your phone (Shizuku or root required).</p>
+            <p data-i18n="hands.e.d">On Android everything runs inside the app. Turn on phone control and Actors can operate your phone (requires Shizuku or root).</p>
           </article>
           <article class="tile tile--full">
-            <h3 data-i18n="hands.f.t">Pick up where you left off</h3>
-            <p data-i18n="hands.f.d">Import conversations from other AI apps and carry on with them here.</p>
+            <div class="tile__art tile__art--import" aria-hidden="true"><span></span><span></span><span></span><em></em></div>
+            <div>
+              <h3 data-i18n="hands.f.t">Pick up where you left off</h3>
+              <p data-i18n="hands.f.d">Import conversations from other AI apps and continue them here.</p>
+            </div>
           </article>
         </div>
       </section>
@@ -324,8 +379,8 @@
         <div class="models__inner">
           <header class="section__head reveal-head">
             <p class="kicker"><span class="kicker__n">06</span><span data-i18n="models.kicker">Models</span></p>
-            <h2 id="models-title" class="h2" data-i18n-html="models.title"><span class="ln">Use the models</span><span class="ln"><em>you already have.</em></span></h2>
-            <p class="section__lede" data-i18n="models.lede">Connect the AI services you already use and note what each model is good at and what it costs. You choose the main model; Daat Locus picks a suitable one for each Actor.</p>
+            <h2 id="models-title" class="h2" data-i18n-html="models.title"><span class="ln">Use the models</span><span class="ln"><em>you already pay for.</em></span></h2>
+            <p class="section__lede" data-i18n="models.lede">Connect the AI services you already use and note what each model is good at and what it costs. You pick the main model; Daat Locus picks one for each Actor.</p>
           </header>
           <ul class="providers reveal-group">
             <li class="reveal"><span class="providers__k">ChatGPT</span><span data-i18n="models.p1">sign in with your subscription</span></li>
@@ -335,7 +390,7 @@
           </ul>
         </div>
         <dl class="facts reveal-group">
-          <div class="reveal"><dt data-i18n="facts.light.k">Light</dt><dd data-i18n="facts.light">on memory, even with several Actors at work</dd></div>
+          <div class="reveal"><dt data-i18n="facts.light.k">Light</dt><dd data-i18n="facts.light">on memory, even with several Actors running</dd></div>
           <div class="reveal"><dt>MCP</dt><dd data-i18n="facts.mcp">fully supported</dd></div>
           <div class="reveal"><dt>4</dt><dd data-i18n="facts.platforms">platforms: Windows, macOS, Linux, Android</dd></div>
           <div class="reveal"><dt data-i18n="facts.open.k">Open</dt><dd data-i18n="facts.open">source, under Apache-2.0</dd></div>
@@ -356,43 +411,49 @@
               <tbody>
                 <tr><th scope="row">Windows</th><td data-i18n="get.win">Desktop app installer</td></tr>
                 <tr><th scope="row">macOS</th><td data-i18n="get.mac">Desktop app</td></tr>
-                <tr><th scope="row">Linux</th><td data-i18n="get.linux">Runs as a service; open it in your web browser</td></tr>
+                <tr><th scope="row">Linux</th><td data-i18n="get.linux">Runs as a service; open it in your browser</td></tr>
                 <tr><th scope="row">Android</th><td data-i18n="get.android">App with everything built in</td></tr>
               </tbody>
             </table>
-            <p class="small" data-i18n="get.note">Browser and screen control need the desktop or Android app.</p>
-            <a class="btn btn--primary" href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener">
+            <p class="small" data-i18n="get.note">Browser and screen control require the desktop or Android app.</p>
+            <a class="btn btn--primary btn--lg" href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener">
               <span data-i18n="get.download">Download from GitHub</span>
               <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v10M3.5 8.5 8 13l4.5-4.5" /></svg>
             </a>
           </div>
           <div class="more reveal">
             <details>
-              <summary data-i18n="get.src">Build it yourself</summary>
+              <summary data-i18n="get.src">Build from source</summary>
               <div class="more__body">
                 <p data-i18n="get.src.d">You'll need Rust, Bun and wasm-pack.</p>
-                <pre><code>git clone https://github.com/shadow3aaa/DaatLocus.git
+                <div class="term">
+                  <div class="term__bar"><span>shell</span><button class="term__copy" type="button" data-i18n="copy">Copy</button></div>
+                  <pre><code>git clone https://github.com/shadow3aaa/DaatLocus.git
 cd DaatLocus
 rustup target add wasm32-unknown-unknown
 bun scripts/build-webui.ts
 cargo run --locked -- serve</code></pre>
+                </div>
               </div>
             </details>
             <details>
               <summary data-i18n="get.relay">Connect several devices</summary>
               <div class="more__body">
                 <p data-i18n="get.relay.d">Deploy the relay to your Cloudflare account once:</p>
-                <pre><code>cd workers/signaling
+                <div class="term">
+                  <div class="term__bar"><span>shell</span><button class="term__copy" type="button" data-i18n="copy">Copy</button></div>
+                  <pre><code>cd workers/signaling
 bun install --frozen-lockfile
 bunx wrangler login
 bunx wrangler deploy</code></pre>
-                <p data-i18n="get.relay.d2">Then, on each device, turn on relay mode in account settings, enter the same address and sign in with the same account.</p>
+                </div>
+                <p data-i18n="get.relay.d2">Then on each device, turn on relay mode in account settings, enter the same relay address and sign in with the same account.</p>
               </div>
             </details>
             <details>
               <summary data-i18n="get.linux.t">Notes for Linux</summary>
               <div class="more__body">
-                <p data-i18n="get.linux.d">Sandboxed commands need bubblewrap and user namespaces enabled.</p>
+                <p data-i18n="get.linux.d">Sandboxed commands need bubblewrap, with user namespaces enabled.</p>
               </div>
             </details>
           </div>
@@ -401,18 +462,22 @@ bunx wrangler deploy</code></pre>
     </main>
 
     <footer class="footer">
-      <div class="footer__mark">
-        <img src="/favicon.svg" alt="" width="40" height="40" />
-        <img class="footer__word for-dark" src="/wordmark-dark.svg" alt="Daat Locus" width="590" height="110" />
-        <img class="footer__word for-light" src="/wordmark-light.svg" alt="Daat Locus" width="590" height="110" />
+      <div class="footer__row">
+        <div class="footer__mark">
+          <img src="/favicon.svg" alt="" width="40" height="40" />
+          <p class="footer__fine" data-i18n="footer.fine">Daat Locus is open source under the Apache License 2.0.</p>
+        </div>
+        <ul class="footer__links">
+          <li><a href="https://github.com/shadow3aaa/DaatLocus" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener" data-i18n="footer.releases">Releases</a></li>
+          <li><a href="https://github.com/shadow3aaa/DaatLocus/blob/main/LICENSE" rel="noopener">Apache-2.0</a></li>
+          <li><a href="https://github.com/shadow3aaa/daat-locus-site" rel="noopener" data-i18n="footer.site">Website source</a></li>
+        </ul>
       </div>
-      <ul class="footer__links">
-        <li><a href="https://github.com/shadow3aaa/DaatLocus" rel="noopener">GitHub</a></li>
-        <li><a href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener" data-i18n="footer.releases">Releases</a></li>
-        <li><a href="https://github.com/shadow3aaa/DaatLocus/blob/main/LICENSE" rel="noopener">Apache-2.0</a></li>
-        <li><a href="https://github.com/shadow3aaa/daat-locus-site" rel="noopener" data-i18n="footer.site">Website source</a></li>
-      </ul>
-      <p class="footer__fine" data-i18n="footer.fine">Daat Locus is open source under the Apache License 2.0.</p>
+      <div class="footer__giant" aria-hidden="true">
+        <img class="for-dark" src="/wordmark-dark.svg" alt="" width="590" height="110" />
+        <img class="for-light" src="/wordmark-light.svg" alt="" width="590" height="110" />
+      </div>
     </footer>
 
     <script type="module" src="/src/main.js"></script>

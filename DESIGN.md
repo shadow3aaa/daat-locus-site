@@ -37,6 +37,25 @@ between them. The centre uses the project's own logo disc.
 - Motion is slow and orbital and plays in full on every device; it only pauses
   while the orrery is off-screen or the tab is hidden.
 
+## Layer two: mission control
+
+On top of the orrery the site reads like an agent console, so it shows work
+happening instead of describing it.
+
+- HUD details: corner brackets on panels, mono labels, a status light and clock
+  in the nav, a reading-progress line, a faint grid and film grain.
+- The hero has a live activity log driven by the orrery's own events
+  (`orrery` CustomEvent: out / gate / approve / back). It is labelled
+  "simulated" because it is an illustration, not real data.
+- "How it works" plays a looping session: one request, three Actor lanes with
+  progress bars and tool steps, then the reply. The real screenshot follows,
+  tilting flat as it scrolls in.
+- Safety shows a request packet travelling through the four gates and pausing
+  at each one.
+- Status colours: blue = assigned / running, amber = boundary / review,
+  green = done. Squared corners (6px) instead of pills.
+- Runtime strings for the log and the session live in `live` in `src/i18n.js`.
+
 ## Narrative
 
 1. Hero — the orrery, one line: one conversation, many Actors, every device.

@@ -98,6 +98,10 @@ export function mountOrrery(svg) {
   const core = el("g", { class: "o-core" }, world);
   el("circle", { r: 220, fill: "url(#core-glow)", class: "o-core__glow" }, core);
   const coreBody = el("g", { class: "o-core__body" }, core);
+  const scan = el("g", { class: "o-core__scan" }, coreBody);
+  el("circle", { r: 96, fill: "none", stroke: "none" }, scan); // symmetric box so it spins on centre
+  el("circle", { r: 84, class: "o-core__ticks" }, scan);
+  el("path", { d: "M 0 -96 A 96 96 0 0 1 83.1 -48", class: "o-core__arc" }, scan);
   el("circle", { r: 66, class: "o-core__halo" }, coreBody);
   el("circle", { r: 56, class: "o-core__disc" }, coreBody);
   el("path", { d: GLYPH, transform: "scale(1.75) translate(-54 -53.3)", class: "o-core__glyph" }, coreBody);
@@ -117,7 +121,7 @@ export function mountOrrery(svg) {
     const dot = el("circle", { r: 6, class: "o-node__dot" }, g);
     const text = el("text", { x: 14, y: 4, class: "o-node__label" }, g);
     text.textContent = a.name;
-    return { ...a, g, halo, dot, theta: a.phase, x: 0, y: 0, glow: 0, side: null };
+    return { ...a, g, halo, dot, text, theta: a.phase, x: 0, y: 0, glow: 0, side: null, lit: false };
   });
 
   function place(b) {
@@ -135,8 +139,17 @@ export function mountOrrery(svg) {
     b.dot.setAttribute("r", (5.5 * s).toFixed(2));
     b.halo.setAttribute("r", (11 * s + b.glow * 9).toFixed(2));
     b.halo.setAttribute("opacity", (0.08 + b.glow * 0.45).toFixed(3));
-    b.g.style.opacity = (0.5 + depth * 0.5).toFixed(3);
+    b.g.style.opacity = (0.5 + depth * 0.5 + b.glow * 0.5).toFixed(3);
+    const lit = b.glow > 0.15;
+    if (lit !== b.lit) {
+      b.lit = lit;
+      b.g.classList.toggle("is-lit", lit);
+    }
   }
+
+  // Tell the page what is happening so the live log can narrate it.
+  const emit = (type, b) =>
+    svg.dispatchEvent(new CustomEvent("orrery", { detail: { type, actor: b.name, device: ORBITS[b.orbit].label, live: live.length } }));
 
   bodies.forEach(place);
 
@@ -152,7 +165,8 @@ export function mountOrrery(svg) {
     const trail = [];
     for (let i = TRAIL; i >= 1; i--) trail.push(el("circle", { r: (3.4 * (1 - i / (TRAIL + 1))).toFixed(2), class: `o-pulse o-pulse--${kind}` }, fx));
     const head = el("circle", { r: 3.8, class: `o-pulse o-pulse--${kind} o-pulse--head` }, fx);
-    live.push({ b, kind, start: now, dur: kind === "gate" ? 2900 : 1900, line, trail, head, back: false });
+    live.push({ b, kind, start: now, dur: kind === "gate" ? 2900 : 1900, line, trail, head, back: false, gated: false });
+    emit("out", b);
     coreRing.classList.remove("is-on");
     requestAnimationFrame(() => coreRing.classList.add("is-on"));
   }
@@ -183,6 +197,14 @@ export function mountOrrery(svg) {
     for (let i = live.length - 1; i >= 0; i--) {
       const p = live[i];
       const t = (now - p.start) / p.dur;
+      if (p.kind === "gate" && !p.gated && t >= 0.34) {
+        p.gated = true;
+        emit("gate", p.b);
+      }
+      if (p.kind === "gate" && p.gated === true && t >= 0.62) {
+        p.gated = "done";
+        emit("approve", p.b);
+      }
       if (t >= 1) {
         if (!p.back) {
           p.b.glow = 1;
@@ -198,6 +220,7 @@ export function mountOrrery(svg) {
         p.head.remove();
         p.trail.forEach((c) => c.remove());
         live.splice(i, 1);
+        emit("back", p.b);
         continue;
       }
       const from = p.back ? [p.b.x, p.b.y] : [0, 0];
