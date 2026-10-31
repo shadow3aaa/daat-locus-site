@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "daatlocus-site",
+      "name": "daat-locus-site",
       "dependencies": {
         "@fontsource/ibm-plex-mono": "^5.2.0",
         "@fontsource/ibm-plex-sans": "^5.2.0",

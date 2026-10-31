@@ -1,6 +1,6 @@
-# daatlocus-site
+# daat-locus-site
 
-Source for [daatlocus.shadow3.work](https://daatlocus.shadow3.work), the website of
+Source for [daat-locus.shadow3.work](https://daat-locus.shadow3.work), the website of
 [Daat Locus](https://github.com/shadow3aaa/DaatLocus).
 
 Plain HTML, CSS and JavaScript built with Vite. Bun is the package manager and script runner.
