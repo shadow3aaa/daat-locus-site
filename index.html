@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daat Locus — one conversation, many Actors, every device</title>
+    <meta name="description" content="Daat Locus is an all-in-one, open-source Agent platform. Talk to one Core; it names Actors for the work, gives each the right model and tools, and runs them in parallel across your devices inside native sandboxes." />
+    <meta name="theme-color" content="#0c0b0b" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://daatlocus.shadow3.work/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Daat Locus" />
+    <meta property="og:description" content="One conversation. Many Actors. Every device. An open-source Agent platform." />
+    <meta property="og:url" content="https://daatlocus.shadow3.work/" />
+    <meta property="og:image" content="https://daatlocus.shadow3.work/screenshot-dark.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("dl-lang");
+          var lang = saved || ((navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh-CN" : "en");
+          document.documentElement.lang = lang;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+    <header class="nav" id="top">
+      <a class="nav__brand" href="#top" aria-label="Daat Locus home">
+        <img src="./wordmark.svg" alt="Daat Locus" width="590" height="110" />
+      </a>
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#motion" data-i18n="nav.how">How it works</a>
+        <a href="#boundaries" data-i18n="nav.safety">Boundaries</a>
+        <a href="#devices" data-i18n="nav.devices">Devices</a>
+        <a href="#get" data-i18n="nav.get">Get it</a>
+      </nav>
+      <div class="nav__actions">
+        <button class="lang" type="button" id="lang-toggle" aria-label="切换到中文">中文</button>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/shadow3aaa/DaatLocus" rel="noopener">GitHub</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__text">
+          <p class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            <span data-i18n="hero.eyebrow">Open-source Agent platform · v0.5.0 · Apache-2.0</span>
+          </p>
+          <h1 id="hero-title" class="display" data-i18n-html="hero.title">One conversation.<br /><em>Many Actors.</em><br />Every device.</h1>
+          <p class="lede" data-i18n="hero.lede">
+            Talk to a single Core. It names Actors for the work, gives each a model and tools that fit, and runs them in parallel across your machines — inside native sandboxes, with a review path at every boundary.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener" data-i18n="hero.download">Download v0.5.0</a>
+            <a class="btn btn--ghost" href="#motion" data-i18n="hero.how">See how it moves</a>
+          </div>
+          <ul class="hero__platforms" aria-label="Platforms">
+            <li>Windows</li><li>macOS</li><li>Linux</li><li>Android</li>
+          </ul>
+        </div>
+
+        <figure class="orrery" aria-labelledby="orrery-cap">
+          <svg id="orrery" viewBox="-520 -400 1040 800" role="img" aria-labelledby="orrery-title orrery-desc">
+            <title id="orrery-title">The Daat Locus orrery</title>
+            <desc id="orrery-desc">Core sits at the centre. Each orbit is a device. Named Actors travel on the orbits while messages move between them and Core.</desc>
+            <defs>
+              <radialGradient id="core-glow" r="0.5">
+                <stop offset="0" stop-color="#f1ecec" stop-opacity="0.32" />
+                <stop offset="0.45" stop-color="#8aa2ff" stop-opacity="0.08" />
+                <stop offset="1" stop-color="#8aa2ff" stop-opacity="0" />
+              </radialGradient>
+              <radialGradient id="node-fill" cx="0.35" cy="0.3" r="0.8">
+                <stop offset="0" stop-color="#ffffff" />
+                <stop offset="1" stop-color="#b7b1b1" />
+              </radialGradient>
+            </defs>
+            <g id="orrery-scene"></g>
+          </svg>
+          <figcaption id="orrery-cap" class="orrery__cap" data-i18n="hero.caption">Illustration · Core at the centre, devices as orbits, Actors as named bodies.</figcaption>
+        </figure>
+      </section>
+
+      <!-- MARQUEE OF NAMES -->
+      <section class="names" aria-label="Actor names">
+        <p class="names__label" data-i18n="names.label">Actors are named by the Actor that creates them, after a mythological figure suited to the task.</p>
+        <div class="names__track" aria-hidden="true">
+          <div class="names__row">
+            <span>Hermes</span><span>Metis</span><span>Demeter</span><span>Athena</span><span>Hephaestus</span><span>Iris</span><span>Mnemosyne</span><span>Argus</span><span>Thoth</span><span>Saraswati</span><span>Odin</span><span>Nüwa</span><span>Brigid</span><span>Ptah</span>
+          </div>
+          <div class="names__row">
+            <span>Hermes</span><span>Metis</span><span>Demeter</span><span>Athena</span><span>Hephaestus</span><span>Iris</span><span>Mnemosyne</span><span>Argus</span><span>Thoth</span><span>Saraswati</span><span>Odin</span><span>Nüwa</span><span>Brigid</span><span>Ptah</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOTION -->
+      <section class="section motion" id="motion" aria-labelledby="motion-title">
+        <header class="section__head">
+          <p class="kicker"><span class="kicker__n">01</span><span data-i18n="motion.kicker">A request in motion</span></p>
+          <h2 id="motion-title" class="h2" data-i18n-html="motion.title">You talk to one Core.<br /><em>It assembles the rest.</em></h2>
+        </header>
+        <div class="motion__grid">
+          <ol class="steps">
+            <li class="step reveal">
+              <span class="step__n">I</span>
+              <div>
+                <h3 data-i18n="motion.s1.t">Ask Core</h3>
+                <p data-i18n="motion.s1.d">Core is the one conversation you have. Short questions get a direct answer — no ceremony.</p>
+              </div>
+            </li>
+            <li class="step reveal">
+              <span class="step__n">II</span>
+              <div>
+                <h3 data-i18n="motion.s2.t">Core names Actors</h3>
+                <p data-i18n="motion.s2.d">For larger work it creates Actors and names each after a fitting mythological figure — Hermes for the trip, Metis for research — choosing a model from your list by capability and cost.</p>
+              </div>
+            </li>
+            <li class="step reveal">
+              <span class="step__n">III</span>
+              <div>
+                <h3 data-i18n="motion.s3.t">They work in parallel</h3>
+                <p data-i18n="motion.s3.d">Each Actor runs its own serial stream of reasoning and tool calls. Actors advance at the same time, on the device that suits the job.</p>
+              </div>
+            </li>
+            <li class="step reveal">
+              <span class="step__n">IV</span>
+              <div>
+                <h3 data-i18n="motion.s4.t">Results come home</h3>
+                <p data-i18n="motion.s4.d">Progress and results return to Core, which tells you what matters in plain language. Any Actor’s conversation stays one click away if you want to watch.</p>
+              </div>
+            </li>
+          </ol>
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <img src="./screenshot-dark.png" width="2160" height="1350" loading="lazy" decoding="async"
+                alt="The Daat Locus interface: Core reports that Hermes, Metis and Demeter are working on three tasks in parallel." data-i18n-alt="motion.alt" />
+            </div>
+            <figcaption data-i18n="motion.cap">One window. Three tasks, three Actors, one thread.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ANATOMY -->
+      <section class="section anatomy" aria-labelledby="anatomy-title">
+        <header class="section__head">
+          <p class="kicker"><span class="kicker__n">02</span><span data-i18n="anatomy.kicker">Anatomy of an Actor</span></p>
+          <h2 id="anatomy-title" class="h2" data-i18n-html="anatomy.title">An Actor is an Agent core<br /><em>plus Apps.</em></h2>
+        </header>
+        <div class="equation reveal" aria-hidden="true">
+          <div class="eq__core">
+            <span class="eq__disc"></span>
+            <span class="eq__label" data-i18n="anatomy.core">Agent core</span>
+          </div>
+          <span class="eq__op">+</span>
+          <div class="eq__apps">
+            <span class="chip">Files</span><span class="chip">Terminal</span><span class="chip">Web</span>
+            <span class="chip">BrowserUse</span><span class="chip">ComputerUse</span><span class="chip">Skills</span>
+            <span class="chip chip--mcp">MCP&nbsp;server</span><span class="chip chip--mcp">MCP&nbsp;server</span>
+          </div>
+          <span class="eq__op">=</span>
+          <div class="eq__actor">
+            <span class="eq__name">Hephaestus</span>
+            <span class="eq__label" data-i18n="anatomy.actor">an Actor</span>
+          </div>
+        </div>
+        <div class="cols3">
+          <article class="note reveal">
+            <h3 data-i18n="anatomy.a.t">Apps are the only tools</h3>
+            <p data-i18n="anatomy.a.d">An App is a small domain state machine that exposes tools. Files, Terminal, Web, the browser and the virtual screen are all Apps — one abstraction, no special cases.</p>
+          </article>
+          <article class="note reveal">
+            <h3 data-i18n="anatomy.b.t">MCP, unmodified</h3>
+            <p data-i18n="anatomy.b.d">Any standard MCP server installs as a device App, over stdio or HTTP, with its own connection and request timeouts. No custom protocol to adopt.</p>
+          </article>
+          <article class="note reveal">
+            <h3 data-i18n="anatomy.c.t">Same Apps, same rules</h3>
+            <p data-i18n="anatomy.c.d">Every Actor on a device gets the same device Apps. What an Actor may touch is decided by the device sandbox, not by per-Actor allowlists.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- BOUNDARIES -->
+      <section class="section boundaries" id="boundaries" aria-labelledby="bound-title">
+        <header class="section__head">
+          <p class="kicker kicker--amber"><span class="kicker__n">03</span><span data-i18n="bound.kicker">Boundaries</span></p>
+          <h2 id="bound-title" class="h2" data-i18n-html="bound.title">Permissions belong to the device,<br /><em>not to the Actor.</em></h2>
+          <p class="section__lede" data-i18n="bound.lede">Work runs inside the operating system’s own isolation. When it reaches a real boundary, the request travels a short, auditable path — and nothing is quietly re-run.</p>
+        </header>
+        <ol class="gates">
+          <li class="gate reveal">
+            <span class="gate__ring" aria-hidden="true"></span>
+            <p class="gate__k" data-i18n="bound.g1.k">Sandbox</p>
+            <h3 data-i18n="bound.g1.t">Native isolation, fail-closed</h3>
+            <p data-i18n="bound.g1.d">AppContainer on Windows, Seatbelt on macOS, bubblewrap on Linux. If the platform can’t enforce isolation, the command doesn’t run on the host instead.</p>
+          </li>
+          <li class="gate reveal">
+            <span class="gate__ring" aria-hidden="true"></span>
+            <p class="gate__k" data-i18n="bound.g2.k">Review</p>
+            <h3 data-i18n="bound.g2.t">An independent check</h3>
+            <p data-i18n="bound.g2.d">A separate model request, with no tools and no worker history, reviews the exact scope. It can only approve or deny; errors and timeouts deny.</p>
+          </li>
+          <li class="gate reveal">
+            <span class="gate__ring" aria-hidden="true"></span>
+            <p class="gate__k" data-i18n="bound.g3.k">Appeal</p>
+            <h3 data-i18n="bound.g3.t">Core asks you</h3>
+            <p data-i18n="bound.g3.d">A denied Actor may appeal to Core. Core checks what you have authorised in the conversation, and asks you when it is missing or unclear.</p>
+          </li>
+          <li class="gate reveal">
+            <span class="gate__ring" aria-hidden="true"></span>
+            <p class="gate__k" data-i18n="bound.g4.k">No replay</p>
+            <h3 data-i18n="bound.g4.t">Effects happen once</h3>
+            <p data-i18n="bound.g4.d">A grant never re-executes the original call. After a restart or cancellation, uncertain effects are recorded — not repeated.</p>
+          </li>
+        </ol>
+        <p class="aside reveal" data-i18n-html="bound.sudo"><strong>Sudo</strong> is the one explicit exception on desktop: a single reviewed invocation outside the sandbox, as you or as administrator. Consent never turns into blanket access.</p>
+      </section>
+
+      <!-- DEVICES -->
+      <section class="section devices" id="devices" aria-labelledby="dev-title">
+        <header class="section__head">
+          <p class="kicker"><span class="kicker__n">04</span><span data-i18n="dev.kicker">Devices</span></p>
+          <h2 id="dev-title" class="h2" data-i18n-html="dev.title">One Core,<br /><em>wherever you are.</em></h2>
+        </header>
+        <div class="devices__grid">
+          <div class="mesh reveal" aria-hidden="true">
+            <svg viewBox="0 0 520 360" class="mesh__svg">
+              <g class="mesh__links">
+                <path d="M110 90 L260 180" /><path d="M410 90 L260 180" /><path d="M110 270 L260 180" /><path d="M410 270 L260 180" />
+              </g>
+              <g class="mesh__pulses">
+                <circle r="3.2"><animateMotion dur="3.2s" repeatCount="indefinite" path="M110 90 L260 180 L410 270" /></circle>
+                <circle r="3.2"><animateMotion dur="4.1s" begin="1s" repeatCount="indefinite" path="M410 90 L260 180 L110 270" /></circle>
+              </g>
+              <g class="mesh__relay">
+                <circle cx="260" cy="180" r="34" />
+                <text x="260" y="176" text-anchor="middle">relay</text>
+                <text x="260" y="192" text-anchor="middle" class="mesh__small">E2E</text>
+              </g>
+              <g class="mesh__dev">
+                <rect x="40" y="62" width="140" height="56" rx="14" /><text x="110" y="86" text-anchor="middle">laptop</text><text x="110" y="104" text-anchor="middle" class="mesh__small">Windows</text>
+                <rect x="340" y="62" width="140" height="56" rx="14" /><text x="410" y="86" text-anchor="middle">studio</text><text x="410" y="104" text-anchor="middle" class="mesh__small">macOS</text>
+                <rect x="40" y="242" width="140" height="56" rx="14" /><text x="110" y="266" text-anchor="middle">server</text><text x="110" y="284" text-anchor="middle" class="mesh__small">Linux</text>
+                <rect x="340" y="242" width="140" height="56" rx="14" /><text x="410" y="266" text-anchor="middle">phone</text><text x="410" y="284" text-anchor="middle" class="mesh__small">Android</text>
+              </g>
+            </svg>
+          </div>
+          <div class="devices__text">
+            <div class="note reveal">
+              <h3 data-i18n="dev.a.t">Shared, not copied</h3>
+              <p data-i18n="dev.a.d">Your Core’s identity, inbox and conversation are shared by your devices. One device hosts its worker at a time and hands off in a stable order when it goes away.</p>
+            </div>
+            <div class="note reveal">
+              <h3 data-i18n="dev.b.t">Encrypted end to end</h3>
+              <p data-i18n="dev.b.d">Devices talk over authenticated, end-to-end encrypted channels carried by a relay you deploy on Cloudflare Workers — no server to maintain. The relay carries traffic; it never owns your work.</p>
+            </div>
+            <div class="note reveal">
+              <h3 data-i18n="dev.c.t">Or just one machine</h3>
+              <p data-i18n="dev.c.d">A single device runs the same Actor core locally, with no relay and no extra setup.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HANDS -->
+      <section class="section hands" aria-labelledby="hands-title">
+        <header class="section__head">
+          <p class="kicker"><span class="kicker__n">05</span><span data-i18n="hands.kicker">Hands</span></p>
+          <h2 id="hands-title" class="h2" data-i18n-html="hands.title">Agents that can use a computer<br /><em>without taking yours.</em></h2>
+        </header>
+        <div class="tiles reveal">
+          <article class="tile tile--wide">
+            <div class="tile__art tile__art--screens" aria-hidden="true"><span></span><span></span><span></span></div>
+            <h3 data-i18n="hands.a.t">Virtual-screen ComputerUse</h3>
+            <p data-i18n="hands.a.d">Actors operate GUI apps on virtual displays, so they don’t fight you for the mouse. You can watch those displays from the app.</p>
+          </article>
+          <article class="tile">
+            <h3 data-i18n="hands.b.t">A shared Agent browser</h3>
+            <p data-i18n="hands.b.d">One browser workspace per device. Actors share its tabs and sign-ins, and you can use it as an ordinary browser.</p>
+          </article>
+          <article class="tile">
+            <h3 data-i18n="hands.c.t">Careful web reading</h3>
+            <p data-i18n="hands.c.d">Plain HTTP without page scripts or ambient cookies, or a rendered page in an isolated WebView.</p>
+          </article>
+          <article class="tile">
+            <h3 data-i18n="hands.d.t">Terminal &amp; files</h3>
+            <p data-i18n="hands.d.d">Scoped commands and edits, with SHA-256 freshness checks so a stale view never overwrites newer work.</p>
+          </article>
+          <article class="tile">
+            <h3 data-i18n="hands.e.t">PhoneUse on Android</h3>
+            <p data-i18n="hands.e.d">The APK embeds the service. When you enable it, PhoneUse operates the phone through Shizuku or root.</p>
+          </article>
+          <article class="tile tile--full">
+            <h3 data-i18n="hands.f.t">Bring your history</h3>
+            <p data-i18n="hands.f.d">Import conversations from other AI apps and continue each one as an Actor.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- MODELS -->
+      <section class="section models" aria-labelledby="models-title">
+        <div class="models__inner">
+          <header class="section__head">
+            <p class="kicker"><span class="kicker__n">06</span><span data-i18n="models.kicker">Models</span></p>
+            <h2 id="models-title" class="h2" data-i18n-html="models.title">The right model<br /><em>for each Actor.</em></h2>
+            <p class="section__lede" data-i18n="models.lede">Describe what each model is good at and what it costs. Pick Core’s model in the composer; Core chooses for every Actor it creates.</p>
+          </header>
+          <ul class="providers reveal">
+            <li><span class="providers__k">OpenAI</span><span data-i18n="models.p1">compatible APIs</span></li>
+            <li><span class="providers__k">Anthropic</span><span data-i18n="models.p2">compatible APIs</span></li>
+            <li><span class="providers__k">Codex</span><span data-i18n="models.p3">sign in with a ChatGPT subscription</span></li>
+            <li><span class="providers__k">Ollama Cloud</span><span data-i18n="models.p4">hosted open models</span></li>
+          </ul>
+        </div>
+        <dl class="facts reveal">
+          <div><dt>Rust</dt><dd data-i18n="facts.rust">core and service</dd></div>
+          <div><dt data-i18n="facts.mem.k">Light</dt><dd data-i18n="facts.mem">memory, even with many Actors</dd></div>
+          <div><dt>MCP</dt><dd data-i18n="facts.mcp">full support</dd></div>
+          <div><dt>4</dt><dd data-i18n="facts.platforms">platforms</dd></div>
+        </dl>
+      </section>
+
+      <!-- GET IT -->
+      <section class="section get" id="get" aria-labelledby="get-title">
+        <header class="section__head">
+          <p class="kicker"><span class="kicker__n">07</span><span data-i18n="get.kicker">Get it</span></p>
+          <h2 id="get-title" class="h2" data-i18n-html="get.title">Start with one device.<br /><em>Add the rest later.</em></h2>
+        </header>
+        <div class="get__grid">
+          <div class="table-wrap reveal">
+            <table class="platforms">
+              <caption class="sr-only" data-i18n="get.caption">Packages by platform</caption>
+              <thead><tr><th scope="col" data-i18n="get.th1">Platform</th><th scope="col" data-i18n="get.th2">Package</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Windows x64</th><td data-i18n="get.win">Desktop installer, using WebView2</td></tr>
+                <tr><th scope="row">macOS</th><td data-i18n="get.mac">Desktop package, using system WebKit</td></tr>
+                <tr><th scope="row">Linux</th><td data-i18n="get.linux">Service archive; open the UI in a browser</td></tr>
+                <tr><th scope="row">Android</th><td data-i18n="get.android">APK with the service built in</td></tr>
+              </tbody>
+            </table>
+            <p class="small" data-i18n="get.note">Browser and computer use need the native client. Sandboxed commands on Linux need bubblewrap and user namespaces. Android has no terminal or Sudo.</p>
+            <a class="btn btn--primary" href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener" data-i18n="get.download">Download from Releases</a>
+          </div>
+          <div class="code reveal">
+            <p class="code__label" data-i18n="get.src">Build from source</p>
+            <pre><code><span class="c">#</span> Rust, Bun, wasm-pack
+git clone https://github.com/shadow3aaa/DaatLocus.git
+cd DaatLocus
+rustup target add wasm32-unknown-unknown
+bun scripts/build-webui.ts
+cargo run --locked -- serve</code></pre>
+            <p class="code__label" data-i18n="get.relay">Connect devices (optional)</p>
+            <pre><code>cd workers/signaling
+bun install --frozen-lockfile
+bunx wrangler login
+bunx wrangler deploy</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__mark">
+        <img src="./favicon.svg" alt="" width="40" height="40" />
+        <img src="./wordmark.svg" alt="Daat Locus" width="590" height="110" class="footer__word" />
+      </div>
+      <ul class="footer__links">
+        <li><a href="https://github.com/shadow3aaa/DaatLocus" rel="noopener">GitHub</a></li>
+        <li><a href="https://github.com/shadow3aaa/DaatLocus/releases" rel="noopener">Releases</a></li>
+        <li><a href="https://github.com/shadow3aaa/DaatLocus/blob/main/LICENSE" rel="noopener">Apache-2.0</a></li>
+        <li><a href="https://github.com/shadow3aaa/daatlocus-site" rel="noopener" data-i18n="footer.site">Site source</a></li>
+      </ul>
+      <p class="footer__fine" data-i18n="footer.fine">Daat Locus is open source under the Apache License 2.0.</p>
+    </footer>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
