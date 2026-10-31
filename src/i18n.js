@@ -5,11 +5,11 @@ export const zh = {
   "nav.safety": "安全",
   "nav.devices": "多设备",
   "nav.get": "下载",
-  "hero.eyebrow": "开源 · v0.5.0",
+  "hero.eyebrow": "开源",
   "hero.title": '<span class="ln">一个对话，</span><span class="ln"><em>一群 Actor，</em></span><span class="ln">你所有的设备。</span>',
   "hero.lede":
     "有什么事，在一个对话里跟 Daat Locus 说就行。简单的问题它直接回答；大一点的任务，它会交给一群叫作 Actor 的 AI 智能体，在你的电脑和手机上同时开工，做完回到这个对话里向你汇报。",
-  "hero.download": "下载 v0.5.0",
+  "hero.download": "下载",
   "hero.how": "看看它怎么工作",
   "names.label": "每个 Actor 都以一位与其任务相称的神话人物命名。",
   "how.kicker": "工作方式",
