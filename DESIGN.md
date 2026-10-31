@@ -37,24 +37,24 @@ between them. The centre uses the project's own logo disc.
 - Motion is slow and orbital and plays in full on every device; it only pauses
   while the orrery is off-screen or the tab is hidden.
 
-## Layer two: mission control
+## App replicas
 
-On top of the orrery the site reads like an agent console, so it shows work
-happening instead of describing it.
+Product screens are static HTML copies of the real WebUI, not invented
+interfaces. They follow `DaatLocus/webui`:
 
-- HUD details: corner brackets on panels, mono labels, a status light and clock
-  in the nav, a reading-progress line, a faint grid and film grain.
-- The hero has a live activity log driven by the orrery's own events
-  (`orrery` CustomEvent: out / gate / approve / back). It is labelled
-  "simulated" because it is an illustration, not real data.
-- "How it works" plays a looping session: one request, three Actor lanes with
-  progress bars and tool steps, then the reply. The real screenshot follows,
-  tilting flat as it scrolls in.
-- Safety shows a request packet travelling through the four gates and pausing
-  at each one.
-- Status colours: blue = assigned / running, amber = boundary / review,
-  green = done. Squared corners (6px) instead of pills.
-- Runtime strings for the log and the session live in `live` in `src/i18n.js`.
+- Tokens, radii, spacing and the Noto Sans UI font come from `webui/src/index.css`.
+- Avatars use a port of `generated-avatar.tsx` (`src/avatar.js`); the seed
+  decides the face, as in the app.
+- UI labels ("Delivered", "Read page", "Used browser", the Apps page) use the
+  app's own `en-US` / `zh-CN` locale strings.
+- Icons are the Lucide icons the app uses, in an inline sprite.
+- Screens: the main conversation with an Actor's work record (how it works),
+  the Apps page (tools), and a phone conversation where Daat Locus asks for a
+  permission (safety). They follow the site's light/dark theme.
+
+Other details: mono labels, a reading-progress line, a faint grid and film
+grain. Safety shows a request packet passing through the four gates.
+Blue = assigned / running, amber = boundary / review, green = done.
 
 ## Narrative
 

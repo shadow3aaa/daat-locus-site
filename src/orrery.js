@@ -147,9 +147,6 @@ export function mountOrrery(svg) {
     }
   }
 
-  // Tell the page what is happening so the live log can narrate it.
-  const emit = (type, b) =>
-    svg.dispatchEvent(new CustomEvent("orrery", { detail: { type, actor: b.name, device: ORBITS[b.orbit].label, live: live.length } }));
 
   bodies.forEach(place);
 
@@ -165,8 +162,7 @@ export function mountOrrery(svg) {
     const trail = [];
     for (let i = TRAIL; i >= 1; i--) trail.push(el("circle", { r: (3.4 * (1 - i / (TRAIL + 1))).toFixed(2), class: `o-pulse o-pulse--${kind}` }, fx));
     const head = el("circle", { r: 3.8, class: `o-pulse o-pulse--${kind} o-pulse--head` }, fx);
-    live.push({ b, kind, start: now, dur: kind === "gate" ? 2900 : 1900, line, trail, head, back: false, gated: false });
-    emit("out", b);
+    live.push({ b, kind, start: now, dur: kind === "gate" ? 2900 : 1900, line, trail, head, back: false });
     coreRing.classList.remove("is-on");
     requestAnimationFrame(() => coreRing.classList.add("is-on"));
   }
@@ -197,14 +193,6 @@ export function mountOrrery(svg) {
     for (let i = live.length - 1; i >= 0; i--) {
       const p = live[i];
       const t = (now - p.start) / p.dur;
-      if (p.kind === "gate" && !p.gated && t >= 0.34) {
-        p.gated = true;
-        emit("gate", p.b);
-      }
-      if (p.kind === "gate" && p.gated === true && t >= 0.62) {
-        p.gated = "done";
-        emit("approve", p.b);
-      }
       if (t >= 1) {
         if (!p.back) {
           p.b.glow = 1;
@@ -220,7 +208,6 @@ export function mountOrrery(svg) {
         p.head.remove();
         p.trail.forEach((c) => c.remove());
         live.splice(i, 1);
-        emit("back", p.b);
         continue;
       }
       const from = p.back ? [p.b.x, p.b.y] : [0, 0];

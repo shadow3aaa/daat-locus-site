@@ -39,14 +39,33 @@
     </script>
   </head>
   <body>
-    <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+    <svg class="sprite" aria-hidden="true" focusable="false">
+      <symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></symbol>
+      <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></symbol>
+      <symbol id="i-contact" viewBox="0 0 24 24"><path d="M16 2v2" /><path d="M17.915 22a6 6 0 0 0-12 0" /><path d="M8 2v2" /><circle cx="12" cy="12" r="4" /><rect x="3" y="4" width="18" height="18" rx="2" /></symbol>
+      <symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" /></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></symbol>
+      <symbol id="i-earth" viewBox="0 0 24 24"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54" /><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17" /><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05" /><circle cx="12" cy="12" r="10" /></symbol>
+      <symbol id="i-browser" viewBox="0 0 24 24"><circle cx="6" cy="7" r="3" /><circle cx="18" cy="5" r="3" /><circle cx="6" cy="19" r="3" /><circle cx="18" cy="17" r="3" /><path d="M9 7h2a4 4 0 0 0 4-2M9 19h2a4 4 0 0 0 4-4v-2a4 4 0 0 1 3-4" /></symbol>
+      <symbol id="i-file-plus" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M9 15h6" /><path d="M12 18v-6" /></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="M12 5v14" /></symbol>
+      <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></symbol>
+      <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
+      <symbol id="i-chev-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-square" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" /></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></symbol>
+      <symbol id="i-panel" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></symbol>
+    </svg>    <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
     <header class="nav" id="top">
       <a class="nav__brand" href="#top" aria-label="Daat Locus">
         <img class="for-dark" src="/wordmark-dark.svg" alt="Daat Locus" width="590" height="110" />
         <img class="for-light" src="/wordmark-light.svg" alt="Daat Locus" width="590" height="110" />
       </a>
-      <p class="nav__status" aria-hidden="true"><span class="nav__led"></span><span data-i18n="nav.status">Core online</span><span class="nav__clock" id="clock">00:00:00</span></p>
       <nav class="nav__links" aria-label="Sections">
         <a href="#how" data-i18n="nav.how">How it works</a>
         <a href="#safety" data-i18n="nav.safety">Safety</a>
@@ -102,15 +121,6 @@
             </defs>
             <g id="orrery-scene"></g>
           </svg>
-          <div class="hud hud--stats intro" style="--i: 3">
-            <div><span class="hud__k" data-i18n="hud.actors">Actors</span><b>09</b></div>
-            <div><span class="hud__k" data-i18n="hud.devices">Devices</span><b>04</b></div>
-            <div><span class="hud__k" data-i18n="hud.flight">In flight</span><b id="hud-flight">00</b></div>
-          </div>
-          <div class="log intro" style="--i: 6">
-            <div class="log__head"><span class="nav__led"></span><span data-i18n="hud.log">Live activity</span><span class="log__sim" data-i18n="hud.sim">simulated</span></div>
-            <ol class="log__lines" id="log"></ol>
-          </div>
         </figure>
       </section>
 
@@ -133,79 +143,101 @@
           <p class="kicker"><span class="kicker__n">01</span><span data-i18n="how.kicker">How it works</span></p>
           <h2 id="how-title" class="h2" data-i18n-html="how.title"><span class="ln">You ask once.</span><span class="ln"><em>A crew splits the work.</em></span></h2>
         </header>
-        <div class="motion__grid">
-          <ol class="steps reveal-group">
-            <li class="step reveal">
-              <span class="step__n">01</span>
-              <div>
-                <h3 data-i18n="how.s1.t">Just ask</h3>
-                <p data-i18n="how.s1.d">Talk to Daat Locus the way you would talk to a capable assistant. Simple questions get a direct answer.</p>
-              </div>
-            </li>
-            <li class="step reveal">
-              <span class="step__n">02</span>
-              <div>
-                <h3 data-i18n="how.s2.t">A crew assembles</h3>
-                <p data-i18n="how.s2.d">For bigger jobs it creates Actors and names each one for its task: Hermes plans the trip, Metis compares the options. Each Actor gets a model chosen for the job, balancing ability and cost.</p>
-              </div>
-            </li>
-            <li class="step reveal">
-              <span class="step__n">03</span>
-              <div>
-                <h3 data-i18n="how.s3.t">Everyone works at once</h3>
-                <p data-i18n="how.s3.d">Each Actor handles its own part in parallel with the others, on whichever of your devices fits the job.</p>
-              </div>
-            </li>
-            <li class="step reveal">
-              <span class="step__n">04</span>
-              <div>
-                <h3 data-i18n="how.s4.t">Results come back to you</h3>
-                <p data-i18n="how.s4.d">Progress and results land in the same conversation, in plain language. Open any Actor to see exactly what it is doing.</p>
-              </div>
-            </li>
-          </ol>
+        <ol class="steps reveal-group">
+          <li class="step reveal">
+            <span class="step__n">01</span>
+            <h3 data-i18n="how.s1.t">Just ask</h3>
+            <p data-i18n="how.s1.d">Talk to Daat Locus the way you would talk to a capable assistant. Simple questions get a direct answer.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__n">02</span>
+            <h3 data-i18n="how.s2.t">A crew assembles</h3>
+            <p data-i18n="how.s2.d">For bigger jobs it creates Actors and names each one for its task: Hermes plans the trip, Metis compares the options. Each Actor gets a model chosen for the job, balancing ability and cost.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__n">03</span>
+            <h3 data-i18n="how.s3.t">Everyone works at once</h3>
+            <p data-i18n="how.s3.d">Each Actor handles its own part in parallel with the others, on whichever of your devices fits the job.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__n">04</span>
+            <h3 data-i18n="how.s4.t">Results come back to you</h3>
+            <p data-i18n="how.s4.d">Progress and results land in the same conversation, in plain language. Open any Actor to see exactly what it is doing.</p>
+          </li>
+        </ol>
 
-          <div class="run reveal" id="run" aria-hidden="true">
-            <div class="run__bar">
-              <span class="run__dots"><i></i><i></i><i></i></span>
-              <span class="run__title" data-i18n="run.title">session · weekend planning</span>
-              <span class="run__live"><span class="nav__led"></span>live</span>
-            </div>
-            <div class="run__body">
-              <p class="run__msg run__msg--you" data-step="0"><span class="run__who" data-i18n="run.you">You</span><span data-i18n="run.ask">Plan a weekend in Kyoto, compare headphones under $200, and plan five weeknight dinners for two.</span></p>
-              <p class="run__msg run__msg--core" data-step="1"><span class="run__who">Daat Locus</span><span data-i18n="run.split">That's three jobs. Starting three Actors.</span></p>
-              <div class="lanes">
-                <div class="lane" data-lane="0">
-                  <span class="lane__name">Hermes</span><span class="lane__model" data-i18n="run.m.hi">strong model</span>
-                  <span class="lane__state">—</span>
-                  <span class="lane__track"><span class="lane__fill"></span></span>
-                  <span class="lane__task" data-i18n="run.t0">Kyoto weekend</span>
+        <figure class="stage reveal">
+          <div class="win win--main" aria-hidden="true">
+            <div class="win__bar"><span class="win__ctl"><svg class="i"><use href="#i-minus" /></svg><svg class="i i--sm"><use href="#i-square" /></svg><svg class="i"><use href="#i-x" /></svg></span></div>
+            <div class="w-app">
+              <nav class="w-rail">
+                <span class="is-on"><svg class="i"><use href="#i-house" /></svg></span>
+                <span><svg class="i"><use href="#i-puzzle" /></svg></span>
+                <span><svg class="i"><use href="#i-contact" /></svg></span>
+                <span><svg class="i"><use href="#i-monitor" /></svg></span>
+                <span><svg class="i"><use href="#i-globe" /></svg></span>
+                <span class="w-rail__me"><span class="w-av w-av--sm" data-avatar="account:lin"></span></span>
+              </nav>
+              <div class="w-view">
+                <div class="w-list">
+                  <div class="w-turn w-turn--own">
+                    <span class="w-av" data-avatar="account:lin"></span>
+                    <div class="w-body"><span class="w-sender">Lin</span><div class="w-bubble w-bubble--user" data-i18n="w.u1">Help me plan a weekend in Kyoto, compare wireless headphones under $200, and plan five weeknight dinners for two.</div></div>
+                  </div>
+                  <div class="w-turn">
+                    <span class="w-av" data-avatar="actor:core"></span>
+                    <div class="w-body"><span class="w-sender">Daat Locus</span><div class="w-bubble w-md" data-i18n-html="w.a1"><p>I've created three Actors to work on these in parallel:</p><ul><li><strong>Hermes</strong> is planning the Kyoto weekend.</li><li><strong>Metis</strong> is comparing headphones.</li><li><strong>Demeter</strong> is putting together the dinners and grocery list.</li></ul><p>I'll bring their suggestions back here.</p></div></div>
+                  </div>
+                  <div class="w-turn w-turn--own">
+                    <span class="w-av" data-avatar="account:lin"></span>
+                    <div class="w-body"><span class="w-sender">Lin</span><div class="w-bubble w-bubble--user" data-i18n="w.u2">Keep the dinners vegetarian, and leave plenty of free time in the itinerary.</div><span class="w-receipt" data-i18n="w.receipt">Delivered 9:41 PM</span></div>
+                  </div>
+                  <div class="w-turn">
+                    <span class="w-av" data-avatar="actor:core"></span>
+                    <div class="w-body"><span class="w-sender">Daat Locus</span><div class="w-bubble" data-i18n="w.a2">Got it: vegetarian dinners and a relaxed pace for the weekend.</div></div>
+                  </div>
+                  <div class="w-turn">
+                    <span class="w-av" data-avatar="actor:core"></span>
+                    <div class="w-body"><span class="w-sender">Daat Locus</span><div class="w-bubble w-md" data-i18n-html="w.a3"><p><strong>The dinner plan and headphone shortlist are ready.</strong></p><ul><li><strong>Dinners:</strong> chickpea curry, mushroom pasta, tofu stir-fry, bean tacos and a vegetable tray bake, with one grocery list.</li><li><strong>Headphones:</strong> three options under $200, compared for comfort, noise cancellation and battery life.</li></ul><p>Hermes is checking opening hours for the Kyoto itinerary. Would you rather focus on gardens or food?</p></div></div>
+                  </div>
                 </div>
-                <div class="lane" data-lane="1">
-                  <span class="lane__name">Metis</span><span class="lane__model" data-i18n="run.m.mid">balanced model</span>
-                  <span class="lane__state">—</span>
-                  <span class="lane__track"><span class="lane__fill"></span></span>
-                  <span class="lane__task" data-i18n="run.t1">Headphones under $200</span>
-                </div>
-                <div class="lane" data-lane="2">
-                  <span class="lane__name">Demeter</span><span class="lane__model" data-i18n="run.m.lo">fast model</span>
-                  <span class="lane__state">—</span>
-                  <span class="lane__track"><span class="lane__fill"></span></span>
-                  <span class="lane__task" data-i18n="run.t2">Dinners for two</span>
+                <div class="w-composer">
+                  <svg class="i i--lg"><use href="#i-plus" /></svg>
+                  <span class="w-placeholder" data-i18n="w.placeholder">Message…</span>
+                  <span class="w-model">gpt-5<svg class="i i--xs"><use href="#i-chev-down" /></svg></span>
+                  <span class="w-send"><svg class="i i--lg"><use href="#i-arrow-up" /></svg></span>
                 </div>
               </div>
-              <p class="run__msg run__msg--core run__msg--done" data-step="2"><span class="run__who">Daat Locus</span><span data-i18n="run.done">The dinner plan and headphone shortlist are ready. Hermes is still checking opening hours in Kyoto.</span></p>
             </div>
           </div>
-        </div>
 
-        <figure class="shot reveal" id="shot">
-          <div class="shot__frame">
-            <div class="shot__bar" aria-hidden="true"><i></i><i></i><i></i><span>Daat Locus</span></div>
-            <img class="for-dark" src="/screenshot-dark.png" width="2160" height="1350" loading="lazy" decoding="async" alt="Daat Locus telling you that Hermes, Metis and Demeter are working on three requests at the same time." data-i18n-alt="how.alt" />
-            <img class="for-light" src="/screenshot-light.png" width="2160" height="1350" loading="lazy" decoding="async" alt="Daat Locus telling you that Hermes, Metis and Demeter are working on three requests at the same time." data-i18n-alt="how.alt" />
+          <div class="win win--actor" aria-hidden="true">
+            <div class="w-dlg-head">
+              <span class="w-dlg-title"><span class="w-av" data-avatar="actor:hermes"></span><b>Hermes</b></span>
+              <svg class="i"><use href="#i-x" /></svg>
+            </div>
+            <div class="w-dlg-body">
+              <div class="w-turn">
+                <span class="w-av" data-avatar="actor:core"></span>
+                <div class="w-body"><span class="w-sender">Daat Locus</span><div class="w-bubble w-bubble--peer" data-i18n="w.h.task">Plan a relaxed weekend in Kyoto for two, with plenty of free time. Check opening hours.</div></div>
+              </div>
+              <div class="w-turn w-turn--own">
+                <span class="w-av" data-avatar="actor:hermes"></span>
+                <div class="w-body"><span class="w-sender">Hermes</span><div class="w-bubble w-bubble--actor" data-i18n="w.h.reply">I'll build the itinerary around a few gardens and temples, then confirm each opening time.</div></div>
+              </div>
+              <div class="w-acts">
+                <span class="w-act-head"><svg class="i i--md"><use href="#i-browser" /></svg><span data-i18n="w.h.group">Used browser Edited files</span><svg class="i i--xs w-act-open"><use href="#i-chev-right" /></svg></span>
+                <ul class="w-steps">
+                  <li><svg class="i i--md"><use href="#i-earth" /></svg><span><span data-i18n="w.read_page">Read page</span> <span data-i18n="w.h.p1">Kinkaku-ji · Visiting hours</span></span></li>
+                  <li><svg class="i i--md"><use href="#i-earth" /></svg><span><span data-i18n="w.read_page">Read page</span> <span data-i18n="w.h.p2">Fushimi Inari Taisha · Access</span></span></li>
+                  <li><svg class="i i--md"><use href="#i-earth" /></svg><span><span data-i18n="w.read_page">Read page</span> <span data-i18n="w.h.p3">Arashiyama · Bamboo grove</span></span></li>
+                  <li><svg class="i i--md"><use href="#i-file-plus" /></svg><span><span data-i18n="w.write_file">Write file</span> <u>kyoto-weekend.md</u></span><em class="w-add">+38</em></li>
+                  <li class="is-run"><svg class="i i--md"><use href="#i-earth" /></svg><span><span data-i18n="w.read_page">Read page</span> <span class="w-shimmer" data-i18n="w.running">Running…</span></span></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <figcaption><span class="shot__tag" data-i18n="how.tag">Real screenshot</span><span data-i18n="how.cap">Three requests, three Actors, one conversation.</span></figcaption>
+          <figcaption data-i18n="how.cap">The Daat Locus app: the main conversation, and Hermes's work record opened from it.</figcaption>
         </figure>
       </section>
 
@@ -215,23 +247,41 @@
           <p class="kicker"><span class="kicker__n">02</span><span data-i18n="tools.kicker">Tools</span></p>
           <h2 id="tools-title" class="h2" data-i18n-html="tools.title"><span class="ln">Every Actor arrives</span><span class="ln"><em>with the right tools.</em></span></h2>
         </header>
-        <div class="equation reveal" aria-hidden="true">
-          <div class="eq__core">
-            <span class="eq__disc"></span>
-            <span class="eq__label" data-i18n="tools.agent">AI agent</span>
+        <figure class="stage stage--apps reveal">
+          <div class="win win--apps" aria-hidden="true">
+            <div class="win__bar"><span class="win__ctl"><svg class="i"><use href="#i-minus" /></svg><svg class="i i--sm"><use href="#i-square" /></svg><svg class="i"><use href="#i-x" /></svg></span></div>
+            <div class="w-app">
+              <nav class="w-rail">
+                <span><svg class="i"><use href="#i-house" /></svg></span>
+                <span class="is-on"><svg class="i"><use href="#i-puzzle" /></svg></span>
+                <span><svg class="i"><use href="#i-contact" /></svg></span>
+                <span><svg class="i"><use href="#i-monitor" /></svg></span>
+                <span><svg class="i"><use href="#i-globe" /></svg></span>
+                <span class="w-rail__me"><span class="w-av w-av--sm" data-avatar="account:lin"></span></span>
+              </nav>
+              <div class="w-view w-apps">
+                <div class="w-apps__head">
+                  <b class="w-apps__title" data-i18n="w.apps.title">Apps</b>
+                  <span class="w-apps__actions">
+                    <span class="w-search"><svg class="i i--sm"><use href="#i-search" /></svg><span data-i18n="w.apps.search">Search apps</span></span>
+                    <svg class="i i--sm"><use href="#i-gear" /></svg>
+                    <span class="w-addbtn"><svg class="i i--sm"><use href="#i-plus" /></svg><span data-i18n="w.apps.add">Add</span></span>
+                  </span>
+                </div>
+                <p class="w-apps__sub" data-i18n="w.apps.sub">Connect your tools to Daat Locus</p>
+                <p class="w-filters"><span class="is-on" data-i18n="w.apps.all">All</span><span data-i18n="w.apps.enabled">Enabled</span></p>
+                <p class="w-apps__section" data-i18n="w.apps.yours">Your apps</p>
+                <div class="w-apps__grid">
+                  <div class="w-appitem"><span class="w-appicon">L</span><span class="w-appcopy"><b>Linear</b><small data-i18n="w.apps.linear">Find issues, update tasks and track project progress</small></span><svg class="i i--sm"><use href="#i-check" /></svg></div>
+                  <div class="w-appitem"><span class="w-appicon">G</span><span class="w-appcopy"><b>GitHub</b><small data-i18n="w.apps.github">Browse repositories, pull requests and issues</small></span><svg class="i i--sm"><use href="#i-check" /></svg></div>
+                  <div class="w-appitem"><span class="w-appicon">N</span><span class="w-appcopy"><b>Notion</b><small data-i18n="w.apps.notion">Search notes and documents</small></span><svg class="i i--sm"><use href="#i-plus" /></svg></div>
+                  <div class="w-appitem"><span class="w-appicon">L</span><span class="w-appcopy"><b data-i18n="w.apps.files">Local files</b><small data-i18n="w.apps.files.d">Read files in the working directory</small></span><svg class="i i--sm"><use href="#i-check" /></svg></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <span class="eq__op">+</span>
-          <div class="eq__apps">
-            <span class="chip" data-i18n="tools.c1">Files</span><span class="chip" data-i18n="tools.c2">Terminal</span><span class="chip" data-i18n="tools.c3">Web</span>
-            <span class="chip" data-i18n="tools.c4">Browser</span><span class="chip" data-i18n="tools.c5">Screen control</span><span class="chip" data-i18n="tools.c6">Skills</span>
-            <span class="chip chip--mcp" data-i18n="tools.c7">Your MCP servers</span>
-          </div>
-          <span class="eq__op">=</span>
-          <div class="eq__actor">
-            <span class="eq__name">Hephaestus</span>
-            <span class="eq__label"><span class="nav__led"></span><span data-i18n="tools.actor">an Actor, ready</span></span>
-          </div>
-        </div>
+          <figcaption data-i18n="tools.cap">Apps page: standard MCP servers install as apps, and every Actor on the device can use them.</figcaption>
+        </figure>
         <div class="cols3 reveal-group">
           <article class="note reveal">
             <h3 data-i18n="tools.a.t">Ready out of the box</h3>
@@ -281,7 +331,44 @@
             <p data-i18n="safety.g4.d">Approving a request never quietly re-runs anything. If an action was interrupted and its result is unclear, it is recorded, not repeated.</p>
           </li>
         </ol>
-        <p class="aside reveal" data-i18n-html="safety.admin"><strong>Administrator access is never automatic.</strong> On desktop, an Actor can ask to run one specific command with elevated rights. Each request is reviewed on its own and never turns into blanket permission.</p>
+        <div class="ask">
+          <div class="ask__text">
+          <div class="note reveal">
+            <h3 data-i18n="safety.ex.t">Asked in plain words</h3>
+            <p data-i18n="safety.ex.d">When an Actor needs access you haven't granted, Daat Locus asks you in the conversation. It names the Actor and the exact folder, and what you approve covers that folder and nothing more.</p>
+          </div>
+          <p class="aside reveal" data-i18n-html="safety.admin"><strong>Administrator access is never automatic.</strong> On desktop, an Actor can ask to run one specific command with elevated rights. Each request is reviewed on its own and never turns into blanket permission.</p>
+          </div>
+          <figure class="stage stage--ask reveal">
+            <div class="win win--ask" aria-hidden="true">
+              <div class="w-phone-head"><svg class="i i--lg"><use href="#i-panel" /></svg><svg class="i i--lg"><use href="#i-search" /></svg></div>
+              <div class="w-list">
+                <div class="w-turn w-turn--own">
+                  <span class="w-av" data-avatar="account:lin"></span>
+                  <div class="w-body"><span class="w-sender">Lin</span><div class="w-bubble w-bubble--user" data-i18n="w.s.u1">Save the itinerary to my Documents folder.</div></div>
+                </div>
+                <div class="w-turn">
+                  <span class="w-av" data-avatar="actor:core"></span>
+                  <div class="w-body"><span class="w-sender">Daat Locus</span><div class="w-bubble" data-i18n-html="w.s.a1">Hermes needs write access to <code>~/Documents/Kyoto</code>, which is outside its sandbox. Do you approve?</div></div>
+                </div>
+                <div class="w-turn w-turn--own">
+                  <span class="w-av" data-avatar="account:lin"></span>
+                  <div class="w-body"><span class="w-sender">Lin</span><div class="w-bubble w-bubble--user" data-i18n="w.s.u2">Yes, just that folder.</div></div>
+                </div>
+                <div class="w-turn">
+                  <span class="w-av" data-avatar="actor:core"></span>
+                  <div class="w-body"><span class="w-sender">Daat Locus</span><div class="w-bubble" data-i18n="w.s.a2">Approved for that folder only. Hermes will save the file again; nothing it tried earlier is re-run automatically.</div></div>
+                </div>
+              </div>
+              <div class="w-composer">
+                <svg class="i i--lg"><use href="#i-plus" /></svg>
+                <span class="w-placeholder" data-i18n="w.placeholder">Message…</span>
+                <span class="w-send"><svg class="i i--lg"><use href="#i-arrow-up" /></svg></span>
+              </div>
+            </div>
+            <figcaption data-i18n="safety.cap">Permission requests reach you in the same conversation.</figcaption>
+          </figure>
+        </div>
       </section>
 
       <!-- DEVICES -->

@@ -3,14 +3,15 @@ import "@fontsource/instrument-serif/400-italic.css";
 import "@fontsource/ibm-plex-sans/400.css";
 import "@fontsource/ibm-plex-sans/500.css";
 import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource-variable/noto-sans/wght.css";
 import "./style.css";
-import { zh, live } from "./i18n.js";
+import { zh, ui } from "./i18n.js";
+import { paintAvatars } from "./avatar.js";
 import { mountOrrery } from "./orrery.js";
 
 const root = document.documentElement;
 window.__dlReady = true;
-const L = () => live[root.lang === "zh-CN" ? "zh-CN" : "en"];
-const onLang = [];
+const L = () => ui[root.lang === "zh-CN" ? "zh-CN" : "en"];
 
 /* ---------- theme ---------- */
 const themeBtn = document.getElementById("theme-toggle");
@@ -104,7 +105,6 @@ function applyLang(lang) {
   langBtn.textContent = isZh ? "EN" : "中文";
   langBtn.setAttribute("aria-label", isZh ? "Switch to English" : "切换到中文");
   syncThemeLabel();
-  onLang.forEach((fn) => fn());
 }
 
 langBtn.addEventListener("click", () => {
@@ -147,9 +147,8 @@ Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => set
   requestAnimationFrame(ready),
 );
 
-/* ---------- nav: scrolled state, reading progress, clock ---------- */
+/* ---------- nav: scrolled state and reading progress ---------- */
 const nav = document.querySelector(".nav");
-const shot = document.getElementById("shot");
 let ticking = false;
 const onScroll = () => {
   if (ticking) return;
@@ -158,27 +157,14 @@ const onScroll = () => {
     const max = document.documentElement.scrollHeight - innerHeight;
     nav.classList.toggle("is-scrolled", scrollY > 24);
     nav.style.setProperty("--p", max > 0 ? (scrollY / max).toFixed(4) : "0");
-    if (shot) {
-      // The product shot tilts back and straightens as it reaches the middle of the screen.
-      const r = shot.getBoundingClientRect();
-      const k = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 0.75)));
-      shot.style.setProperty("--k", k.toFixed(3));
-    }
     ticking = false;
   });
 };
 onScroll();
 addEventListener("scroll", onScroll, { passive: true });
 addEventListener("resize", onScroll, { passive: true });
-
-const clockEl = document.getElementById("clock");
-const hhmmss = (d = new Date()) => d.toTimeString().slice(0, 8);
-const tick = () => (clockEl.textContent = hhmmss());
-tick();
-setInterval(tick, 1000);
-
 /* ---------- pointer spotlight on tiles and cards ---------- */
-document.querySelectorAll(".tile, .equation, .shot__frame, .run").forEach((el) => {
+document.querySelectorAll(".tile").forEach((el) => {
   el.addEventListener(
     "pointermove",
     (e) => {
@@ -206,104 +192,10 @@ document.querySelectorAll(".term__copy").forEach((btn) => {
   });
 });
 
-/* ---------- live log fed by the orrery ---------- */
-const orrery = document.getElementById("orrery");
-const logEl = document.getElementById("log");
-const flightEl = document.getElementById("hud-flight");
-const MAX_LINES = 5;
-
-function logLine(kind, actor, text) {
-  const li = document.createElement("li");
-  li.className = `log__line log__line--${kind}`;
-  const time = document.createElement("time");
-  time.textContent = hhmmss();
-  const who = document.createElement("b");
-  who.textContent = actor;
-  const msg = document.createElement("span");
-  msg.textContent = text;
-  li.append(time, who, msg);
-  logEl.append(li);
-  while (logEl.children.length > MAX_LINES) logEl.firstElementChild.remove();
-}
-
-logLine("back", "Core", L().ready);
-orrery.addEventListener("orrery", (e) => {
-  const { type, actor, device, live: n } = e.detail;
-  const d = L();
-  const task = d.tasks[actor] ?? "";
-  const text = {
-    out: `${d.out} · ${task} · ${device}`,
-    gate: `${d.gate} · ${task}`,
-    approve: `${d.approve} · ${task}`,
-    back: `${d.back} · ${task}`,
-  }[type];
-  logLine(type, actor, text);
-  flightEl.textContent = String(n).padStart(2, "0");
-});
-
-/* ---------- session demo: three Actors in parallel ---------- */
-const run = document.getElementById("run");
-if (run) {
-  const CYCLE = 15000;
-  const msgs = [...run.querySelectorAll("[data-step]")];
-  const msgAt = [200, 1200, 10200];
-  const lanes = [...run.querySelectorAll(".lane")].map((el, i) => ({
-    el,
-    fill: el.querySelector(".lane__fill"),
-    state: el.querySelector(".lane__state"),
-    start: [2000, 2500, 3000][i],
-    dur: [9000, 6200, 5400][i],
-    end: [0.85, 1, 1][i],
-    shown: "",
-  }));
-  const ease = (x) => 1 - Math.pow(1 - x, 2.2);
-  let t0 = performance.now();
-  let raf = 0;
-  let lastT = 0;
-
-  const render = (ms) => {
-    lastT = ms;
-    msgs.forEach((m, i) => m.classList.toggle("is-on", ms >= msgAt[i]));
-    const d = L();
-    lanes.forEach((lane, i) => {
-      const x = Math.min(1, Math.max(0, (ms - lane.start) / lane.dur));
-      const p = ease(x) * lane.end;
-      lane.fill.style.transform = `scaleX(${p.toFixed(4)})`;
-      const steps = d.lanes[i];
-      let s;
-      if (ms < lane.start) s = d.states.queued;
-      else if (x >= 1 && lane.end === 1) s = d.states.done;
-      else s = steps[Math.min(steps.length - 1, Math.floor(x * steps.length))];
-      if (s !== lane.shown) {
-        lane.state.textContent = s;
-        lane.shown = s;
-      }
-      lane.el.classList.toggle("is-active", ms >= lane.start && !(x >= 1 && lane.end === 1));
-      lane.el.classList.toggle("is-done", x >= 1 && lane.end === 1);
-    });
-    run.classList.toggle("is-fading", ms > CYCLE - 700);
-  };
-  const frame = (now) => {
-    raf = requestAnimationFrame(frame);
-    render((now - t0) % CYCLE);
-  };
-  render(0);
-  onLang.push(() => {
-    lanes.forEach((l) => (l.shown = ""));
-    render(lastT);
-  });
-  new IntersectionObserver(([e]) => {
-    if (e.isIntersecting && !raf) {
-      t0 = performance.now() - lastT;
-      raf = requestAnimationFrame(frame);
-    } else if (!e.isIntersecting && raf) {
-      cancelAnimationFrame(raf);
-      raf = 0;
-    }
-  }).observe(run);
-}
+/* ---------- app replicas ---------- */
+paintAvatars();
 
 applyLang(root.lang === "zh-CN" ? "zh-CN" : "en");
 
 /* ---------- orrery ---------- */
-mountOrrery(orrery);
+mountOrrery(document.getElementById("orrery"));
